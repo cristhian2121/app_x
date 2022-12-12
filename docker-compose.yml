@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  dashboard:
+    image: dashboard
+    build:
+      context: ./
+      dockerfile: ./app_x/Dockerfile
+    env_file:
+        app_x/.env
+    ports:
+      - 3000:3000
+    container_name: app-x
+    restart: always
+
+  api:
+    image: user-api
+    build:
+      context: ./api
+    env_file:
+      - ./api/.env
+    ports:
+      - 3100:3030
+    container_name: api-x
+    restart: always
+
