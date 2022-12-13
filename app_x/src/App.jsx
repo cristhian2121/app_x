@@ -1,30 +1,18 @@
-import { useState, useEffect } from 'react';
-import { UserList } from './components/UserList';
+import { useState, useEffect } from "react";
+import { UserList } from "./components/UserList";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 
 function App() {
-  
-  const [data, setData] = useState([]);
-
-useEffect(() => {
-
-  fetch('http://localhost:3100/users')
-  .then( res => res.json())
-  .then( data => {
-    //console.log(data);
-    setData(data)
-  })
-
-}, [])
-
-
   return (
     <>
-
-    <div className='Main-table'>
-      <UserList data={data} />
-    </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/user/:id" element={<Detail />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
