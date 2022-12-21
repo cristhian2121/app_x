@@ -1,6 +1,14 @@
 import React from "react";
 import { UserRows } from "./UserRows";
 
+//TODO: cambiar pot DataGrid
+/*
+<DataGrid
+  rows={rows} -> data
+  columns={columns} 
+/>
+*/
+
 function UserList({ data }) {
   return (
     <>

@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 function UserRows({ el }) {
   const navigate = useNavigate();
+  // LLammar
 
   const handleOnClick = () => {
     console.log("**");
+    // set context (el.username)
     navigate(`/user/${el.id}`);
   };
 
