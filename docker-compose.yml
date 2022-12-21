@@ -2,22 +2,37 @@ version: "3.9"
 services:
   app_x:
     image: app-web
+    container_name: app-x
     build:
       context: ./app_x
-    env_file:
-        app_x/.env
+    env_file: app_x/.env
     ports:
       - 3000:3000
-    container_name: app-x
     restart: always
+    volumes:
+      - ./app_x/src:/app/src
   api:
     image: user-api
+    container_name: api-x
     build:
       context: ./api
     env_file:
       - api/.env
+
+    volumes:
+      - ./api/src:/app/src
     ports:
       - 3100:3100
-    container_name: api-x
     restart: always
+    depends_on:
+      - mongo
 
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_app_x:/data/db
+
+volumes:
+  mongodb_app_x:
