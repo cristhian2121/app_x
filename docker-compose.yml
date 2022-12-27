@@ -1,38 +1,46 @@
-version: "3.9"
+version: "3.6"
 services:
+  my-mongodb:
+    image: mongo
+    container_name: my-mongodb
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongodb_app_x:/data/db
   app_x:
     image: app-web
+    restart: always
     container_name: app-x
     build:
       context: ./app_x
     env_file: app_x/.env
     ports:
       - 3000:3000
-    restart: always
     volumes:
       - ./app_x/src:/app/src
   api:
     image: user-api
     container_name: api-x
+    restart: always
     build:
       context: ./api
-    env_file:
-      - api/.env
-
+    environment:
+      PORT: 3100
+      MONGO_URL: my-mongodb
+      MONGO_DB: test
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     volumes:
       - ./api/src:/app/src
     ports:
       - 3100:3100
-    restart: always
     depends_on:
-      - mongo
-
-  mongo:
-    image: mongo
-    ports:
-      - 27017:27017
-    volumes:
-      - mongodb_app_x:/data/db
+      - my-mongodb
 
 volumes:
   mongodb_app_x:
