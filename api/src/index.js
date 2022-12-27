@@ -3,8 +3,19 @@ import express from "express";
 import { messages, users } from "./data";
 import cors from "cors";
 import bodyParser from "body-parser";
+import mongoose from "mongoose"
 
 const app = express();
+const url = `mongodb://${process.env.MONGO_URL}:27017`
+mongoose.connect(
+  url,
+  {
+    useUnifiedTopology: true,
+    dbName: process.env.MONGO_DB
+  }
+)
+
+const db = mongoose.connection;
 
 app.use(
   cors({
