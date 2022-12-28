@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { UserList } from "../components/UserList";
-import UsersList from "../components/UsersList";
+import DataTable from '../components/TableMUI'
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <div className="Main-table">
+      <DataTable data={data} />
       <UserList data={data} />
     </div>
   );
