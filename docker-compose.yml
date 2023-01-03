@@ -7,9 +7,8 @@ services:
     ports:
       - 27017:27017
     environment:
-      - MONGO_INITDB_DATABASE=test
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass12345
     volumes:
       - mongodb_app_x:/data/db
   app_x:
@@ -32,9 +31,9 @@ services:
     environment:
       PORT: 3100
       MONGO_URL: my-mongodb
-      MONGO_DB: test
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_DB: uniformes
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass12345
     volumes:
       - ./api/src:/app/src
     ports:
