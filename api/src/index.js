@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import mongoose, { Types } from "mongoose"
 import { StudentModel } from "./schemas/studentSchema";
 import { DressMakerModel } from "./schemas/dressMaker";
-import path from "path"
 import jsonStudens from "./mock/students.json";
 import jsonDressMaker from "./mock/dressMaker.json";
 
@@ -52,7 +51,7 @@ app.get("/students", async (req, res) => {
 
 app.get("/students/:id", async (req, res) => {
   const { id } = req.params
-  const student = await StudentModel.findOne({ _id: mongoose.Types.ObjectId(id) })
+  const student = await StudentModel.findOne({ _id: Types.ObjectId(id) })
   return res.status(200).send(student)
 });
 
@@ -122,7 +121,7 @@ app.post("/dressMakers/login", async (req, res) => {
 
 app.get("/dressMakers/:id", async (req, res) => {
   const { id } = req.params
-  const dressMaker = await DressMakerModel.findOne({ _id: mongoose.Types.ObjectId(id) })
+  const dressMaker = await DressMakerModel.findOne({ _id: Types.ObjectId(id) })
   return res.status(200).send(dressMaker)
 });
 
