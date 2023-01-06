@@ -1,0 +1,37 @@
+:root {
+    --white: #FFFFFF;
+    --black: #000000;
+    --hospital-blue: #1876d1;
+    --sm: 14px;
+    --md: 16px;
+    --lg: 18px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif; 
+}
+.login{
+    width: 100%;
+    height: 80vh;
+    display: grid;
+    place-items: center;
+}
+.form-container {
+    display: grid;
+    /* grid-template-rows: auto 1fr auto; */
+    width: 300px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+.form a {
+    color: var(--hospital-blue);
+    font-size: var(--sm);
+    text-align: center;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
