@@ -20,6 +20,7 @@ export const TitleProvider = ({ children }) => {
     <TitleContext.Provider
       value={{
         title,
+        setTitle,
         updateTitle,
       }}
     >

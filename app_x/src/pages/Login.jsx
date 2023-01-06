@@ -5,6 +5,7 @@ import { Button, Select, MenuItem, InputLabel } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { Navigate } from 'react-router-dom';
+import { TitleContext } from '../context/TitleContext';
 
 const Login = () => {
 
@@ -14,9 +15,29 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
+    const llamado = () => {
+
+        const url = 'http://localhost:3100/students/login';
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({
+                password: 'QyscVvDYE78I',
+                email: 'siorizzi0@adobe.com',
+            }),
+        }
+
+        fetch(url, options)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+      });
+    }
+    
+
     const login = (e) => {
         e.preventDefault();
         auth.login({nickName});
+        llamado();
         console.log(nickName, password, role);
     };
 
@@ -27,7 +48,7 @@ const Login = () => {
   return (
     <>
         <div className="login">
-            <h2>Uniformes la 23</h2>
+            <h1>Uniformes la 23</h1>
             
             <div className="form-container">
 

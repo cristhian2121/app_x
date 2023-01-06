@@ -72,7 +72,9 @@ app.get("/db/students", async (req, res) => {
   return res.send("Ok");
 });
 
+//endpint
 app.post("/students/login", async (req, res) => {
+  console.log(req.body);
   const { password, email } = req.body;
 
   // validate properties

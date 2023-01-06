@@ -15,6 +15,7 @@ export const users = [
   {
     id: "4",
     username: "Elvis Crespo",
+    nickName: "Merengue",
   },
 ];
 
