@@ -107,7 +107,7 @@ app.post("/dressMakers/login", async (req, res) => {
     return res.status(400).send(false)
   }
 
-  const dressMaker = await DressMakerModel.findOne({ email })
+  const dressMaker = await DressMakerModel.findOne({ nickName: email })
   if(!dressMaker){
     return res.status(401).send(false)
   }
