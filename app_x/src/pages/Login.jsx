@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Selects from '../components/Selects';
-import { Button, Select, MenuItem, InputLabel } from '@mui/material';
+import { Button } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { Navigate } from 'react-router-dom';
-import { TitleContext } from '../context/TitleContext';
 
 const Login = () => {
 
@@ -15,30 +14,72 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
-    const llamado = () => {
+    //ToDO
+    // funcion para llamado de modistas llamadomodistas
+    // pasarle el rol al auth para validar rutas
+    // localstorage
 
-        const url = 'http://localhost:3100/students/login';
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                password: 'QyscVvDYE78I',
-                email: 'siorizzi0@adobe.com',
-            }),
-        }
+    const llamadoEstudiantes = () => {
+
+            const url = 'http://localhost:3100/students/login';
+            const options = {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    email: nickName,
+                    password: password,
+                }),
+            }
 
         fetch(url, options)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
+
+                if(data) {
+                    auth.login({nickName, role});
+                } else {
+                    console.log('false');
+                }
       });
     }
-    
+
+    const llamadoModistas = () => {
+        const url2 = 'http://localhost:3100/dressMakers/login';
+        const options = {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                password: password,
+                email: nickName,
+            }),
+        }
+
+    fetch(url2, options)
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+
+            if(data) {
+                auth.login({nickName});
+            } else {
+                console.log('false');
+            }
+  });
+}
 
     const login = (e) => {
         e.preventDefault();
-        auth.login({nickName});
-        llamado();
         console.log(nickName, password, role);
+         if(role === 'estudiante') {
+            llamadoEstudiantes(); 
+        } else {
+            llamadoModistas();
+        }
     };
 
     if(auth.user) {
@@ -53,7 +94,7 @@ const Login = () => {
             <div className="form-container">
 
                 <form action="/" className="form" onSubmit={login} >
-                    <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Nick Name" sx={{ mb: 3}} />
+                    <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} />
 
                     <Selects role={role} setRole={setRole} />
 

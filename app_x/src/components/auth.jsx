@@ -1,40 +1,23 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-const users = [
-    {
-        nickName: 'Adri',
-        password: 'mctqL3QH85',
-        role: 'estudiante',
-
-    },
-    {
-        nickName: 'César',
-        password: 'L1xa5PdDqGuE',
-        role: 'estudiante',
-    },
-    {
-        nickName: 'Maria',
-        password: 'pjTmKWciX',
-        role: 'estudiante',
-    },
-]
-
 const AuthContext = React.createContext();
 
 const AuthProvider = ({children}) => {
 
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
+    const [role, setRole] = React.useState(null);
     
-    const login = ( username ) => {
+    const login = ( username, role ) => {
         
         setUser( {username} );
+        setRole( {role} );
         navigate('/miuniforme');
     }
 
     //Lo necesitamos para la autenticacion
-    const auth = { user, login };
+    const auth = { user, login, role };
 
   return (
     <AuthContext.Provider value={auth}>
