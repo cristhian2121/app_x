@@ -8,6 +8,7 @@ import { StudentModel } from "./schemas/studentSchema";
 import { DressMakerModel } from "./schemas/dressMaker";
 import jsonStudens from "./mock/students.json";
 import jsonDressMaker from "./mock/dressMaker.json";
+import { MessageModel } from "./schemas/messageSchema";
 
 
 const app = express();
@@ -142,12 +143,24 @@ app.get("/db/dressMaker", async (req, res) => {
 });
 
 //////////// Messages ////////////
-app.get("/messages", (req, res) => {
-  return res.send(Object.values(messages));
+app.get("/messages/:studentId", async (req, res) => {
+  const { studentId } = req.params
+  if(!studentId) {
+    return res.status(400).send(false)
+  }
+
+  const messages = await MessageModel.find({ studentId })
+  return res.status(200).send(messages);
 });
 
-app.get("/messages/:messageId", (req, res) => {
-  return res.send(messages[req.params.messageId]);
+app.get("/messages/:studentId/:dressMakerId", async (req, res) => {
+  const { studentId, dressMakerId } = req.params
+  if(!studentId || !dressMakerId) {
+    return res.status(400).send(false)
+  }
+
+  const messages = await MessageModel.find({ studentId, dressMakerId })
+  return res.status(200).send(messages);
 });
 
 // TODO: remove it
