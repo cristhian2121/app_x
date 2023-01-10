@@ -81,7 +81,7 @@ app.post("/students/login", async (req, res) => {
     return res.status(400).send(false)
   }
 
-  const student = await StudentModel.findOne({ email})
+  const student = await StudentModel.findOne({ nickName: email})
   if(!student){
     return res.status(401).send(false)
   }
