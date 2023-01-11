@@ -7,17 +7,17 @@ const AuthProvider = ({children}) => {
 
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
-    const [role, setRole] = React.useState(null);
     
-    const login = ( username, role ) => {
+    const login = ( username ) => {
         
         setUser( {username} );
-        setRole( {role} );
-        navigate('/miuniforme');
+        //console.log("Este rol es:", username.role);
+
+        username.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
     }
 
     //Lo necesitamos para la autenticacion
-    const auth = { user, login, role };
+    const auth = { user, login };
 
   return (
     <AuthContext.Provider value={auth}>
@@ -39,7 +39,6 @@ function AuthRoute(props) {
     if ( !auth.user) {
         return <Navigate to={'/'} />
     }
-
     return props.children;
 }
 

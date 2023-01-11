@@ -14,23 +14,11 @@ body {
   padding: 0px;
 }
 
-.Main-table {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 500px;
+.listado-estudiantes {
+  position: relative;
   width: 100%;
-}
-
-table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 0.5rem;
-  border-bottom: thin solid #dedede;
-}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+} 

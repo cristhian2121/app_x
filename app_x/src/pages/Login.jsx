@@ -65,7 +65,7 @@ const Login = () => {
             console.log(data);
 
             if(data) {
-                auth.login({nickName});
+                auth.login({nickName, role});
             } else {
                 console.log('false');
             }

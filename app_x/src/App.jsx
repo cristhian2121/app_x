@@ -8,6 +8,7 @@ import { TitleProvider } from "./context/TitleContext";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import { AuthProvider, AuthRoute } from "./components/auth";
+import StudentsList from "./pages/StudentsList";
 
 //1. hacer la llamada a la api aca en lugar de home
 //2. los id en los datos retornaban el siguiente id
@@ -18,6 +19,7 @@ function App() {
     <>
       <TitleProvider>
       <AuthProvider>
+
         <Header />
 
         <Routes>
@@ -25,6 +27,11 @@ function App() {
           <Route path="/miuniforme" element={
             <AuthRoute>
             <Profile />
+          </AuthRoute>
+          } />
+          <Route path="/estudiantes" element={
+          <AuthRoute>
+          <StudentsList />
           </AuthRoute>
           } />
 
