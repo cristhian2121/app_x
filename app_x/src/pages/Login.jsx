@@ -98,9 +98,9 @@ const Login = () => {
         }
     };
 
-    if(auth.user) {
-        return <Navigate to='/miuniforme/' />
-    }
+    // if(auth.user) {
+    //     return <Navigate to='/miuniforme/' />
+    // }
 
   return (
     <>
