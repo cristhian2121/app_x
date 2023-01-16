@@ -5,14 +5,30 @@ import { Button } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { Navigate } from 'react-router-dom';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+    Email: yup.string().required().email("pon un email"),
+  });
 
 const Login = () => {
+    console.log("Rendered");
 
     const auth = useAuth();
 
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+
+    const { handleSubmit, control, formState:{ errors } } = useForm({
+        defaultValues: {
+            Email: "",            
+        },
+        resolver: yupResolver(schema)
+        
+    });
 
     //ToDO
     // funcion para llamado de modistas llamadomodistas
@@ -93,12 +109,30 @@ const Login = () => {
             
             <div className="form-container">
 
-                <form action="/" className="form" onSubmit={login} >
-                    <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} />
+                <form action="/" className="form" onSubmit={handleSubmit(data => console.log(data))} >
+                    <Controller
+                        control={control}
+                        name="Email"
+                        render={({ field }) => (
+                            <TextField 
+                                {...field}
+                                onBlur={(e) => {
+                                    //... proceso
+                                    field.onBlur(e)
+                                }}
+                                required
+                                id="outlined-required"
+                                label="Email" 
+                                sx={{ mb: 3}}
+                            />
+                        )}
+                    />
+                    {errors.Email ? <p>{errors.Email.message}</p> : null}
+                    {/* <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} />
 
                     <Selects role={role} setRole={setRole} />
 
-                    <TextField value={password} onChange={e => setPassword(e.target.value) } id="outlined-password-input" label="Password" type="password" autoComplete="current-password" sx={{ mb: 3}} />
+                    <TextField value={password} onChange={e => setPassword(e.target.value) } id="outlined-password-input" label="Password" type="password" autoComplete="current-password" sx={{ mb: 3}} /> */}
 
                     <Button type='submit' size="large" variant="contained" sx={{ mb: 3}} >Log in</Button>
                     <a href="/">Forgot my password</a>

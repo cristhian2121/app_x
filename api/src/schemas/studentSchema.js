@@ -4,7 +4,7 @@ const StudentSchema = new mongoose.Schema({
     // roll_no: Number,
     firstName: String,
     lastName: { type: String, require: false },
-    nickName: String,
+    nickName: { type: String, require: false },
     gender: { type: String, require: false },
     shirtSize: String,
     password: String,
