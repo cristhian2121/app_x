@@ -7,9 +7,9 @@ import Select from '@mui/material/Select';
 
 export default function BasicSelect({role, setRole}) {
 
-  const handleChange = (event) => {
-    setRole(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setRole(event.target.value);
+  // };
 
   return (
     <Box sx={{ mb: 3, minWidth: 120 }}>
@@ -20,7 +20,7 @@ export default function BasicSelect({role, setRole}) {
           id="demo-simple-select"
           value={role}
           label="Tipo de usuario"
-          onChange={handleChange}
+          //onChange={handleChange}
         >
           <MenuItem value='estudiante'>Estudiante</MenuItem>
           <MenuItem value='modista'>Modista</MenuItem>

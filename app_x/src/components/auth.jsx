@@ -1,6 +1,9 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
+
+//docker compose up --build --force-recreate
+
 const AuthContext = React.createContext();
 
 const AuthProvider = ({children}) => {
@@ -8,12 +11,13 @@ const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null);
     
-    const login = ( username ) => {
+    const login = ( userinfo ) => {
         
-        setUser( {username} );
+        setUser( userinfo );
+        console.log( userinfo );
         //console.log("Este rol es:", username.role);
 
-        username.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
+        userinfo.dataForm.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
     }
 
     //Lo necesitamos para la autenticacion

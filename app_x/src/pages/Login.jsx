@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Selects from '../components/Selects';
-import { Button } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
-import { Navigate } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const schema = yup.object({
-    Email: yup.string().required().email("pon un email"),
+    email: yup.string().required().email("Pon un email"),
   });
 
 const Login = () => {
@@ -21,10 +19,14 @@ const Login = () => {
     const [nickName, setNickName] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
+    
+    const [dataForm, setDataForm] = useState(null);
 
     const { handleSubmit, control, formState:{ errors } } = useForm({
         defaultValues: {
-            Email: "",            
+            email: "",
+            password: "",  
+            role: "",          
         },
         resolver: yupResolver(schema)
         
@@ -36,6 +38,7 @@ const Login = () => {
     // localstorage
 
     const llamadoEstudiantes = () => {
+            console.log(dataForm);
 
             const url = 'http://localhost:3100/students/login';
             const options = {
@@ -44,8 +47,8 @@ const Login = () => {
                 },
                 method: 'POST',
                 body: JSON.stringify({
-                    email: nickName,
-                    password: password,
+                    email: dataForm.email,
+                    password: dataForm.password,
                 }),
             }
 
@@ -53,9 +56,8 @@ const Login = () => {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-
                 if(data) {
-                    auth.login({nickName, role});
+                    auth.login({dataForm, data});
                 } else {
                     console.log('false');
                 }
@@ -88,61 +90,109 @@ const Login = () => {
   });
 }
 
-    const login = (e) => {
-        e.preventDefault();
-        console.log(nickName, password, role);
-         if(role === 'estudiante') {
+    const login = (data) => {
+        //e.preventDefault();
+
+        setDataForm(data);
+         if(data.role === 'estudiante') {
             llamadoEstudiantes(); 
         } else {
             llamadoModistas();
         }
     };
 
-    // if(auth.user) {
-    //     return <Navigate to='/miuniforme/' />
-    // }
-
   return (
     <>
-        <div className="login">
-            <h1>Uniformes la 23</h1>
-            
-            <div className="form-container">
+      <div className="login">
+        <h1>Uniformes la 23</h1>
 
-                <form action="/" className="form" onSubmit={handleSubmit(data => console.log(data))} >
-                    <Controller
-                        control={control}
-                        name="Email"
-                        render={({ field }) => (
-                            <TextField 
-                                {...field}
-                                onBlur={(e) => {
-                                    //... proceso
-                                    field.onBlur(e)
-                                }}
-                                required
-                                id="outlined-required"
-                                label="Email" 
-                                sx={{ mb: 3}}
-                            />
-                        )}
-                    />
-                    {errors.Email ? <p>{errors.Email.message}</p> : null}
-                    {/* <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} />
+        <div className="form-container">
+          <form
+            action="/"
+            className="form"
+            onSubmit={handleSubmit(login)}
+          >
+            <Controller
+              control={control}
+              name="email"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  // onBlur={(e) => {
+                  //     //... proceso
+                  //     field.onBlur(e)
+                  // }}
+                  required
+                  id="outlined-required"
+                  label="Email"
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
+            {errors.Email ? <p>{errors.Email.message}</p> : null}
 
-                    <Selects role={role} setRole={setRole} />
+            {/* <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} /> */}
 
-                    <TextField value={password} onChange={e => setPassword(e.target.value) } id="outlined-password-input" label="Password" type="password" autoComplete="current-password" sx={{ mb: 3}} /> */}
+            <Box sx={{ mb: 3, minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Tipo de usuario
+                </InputLabel>
+                <Controller
+                  control={control}
+                  name="role"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Tipo de usuario"
+                    >
+                      <MenuItem value="estudiante">Estudiante</MenuItem>
+                      <MenuItem value="modista">Modista</MenuItem>
+                    </Select>
+                  )}
+                />
+              </FormControl>
+            </Box>
 
-                    <Button type='submit' size="large" variant="contained" sx={{ mb: 3}} >Log in</Button>
-                    <a href="/">Forgot my password</a>
+            <Controller
+              control={control}
+              name="password"
+              render={({ field }) => (
+                <TextField
+                  //value={password}
+                  //onChange={e => setPassword(e.target.value) }
+                  {...field}
+                  id="outlined-password-input"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  sx={{ mb: 3 }}
+                />
+              )}
+            />
 
-                    <Button size="large" variant="outlined" >Sign up</Button>
-                </form>
-            </div>
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              sx={{ mb: 3 }}
+            >
+              Log in
+            </Button>
+            <a href="/">Forgot my password</a>
+
+            <Button size="large" variant="outlined">
+              Sign up
+            </Button>
+
+
+          </form>
         </div>
+      </div>
     </>
-)
+  );
 }
 
 export default Login
