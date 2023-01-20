@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
 const DEFAULT_VALUE = {
-  title: "Lista de usuarios",
+  title: "Usuario",
   updateTitle: () => {},
 };
 

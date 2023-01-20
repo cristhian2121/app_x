@@ -15,6 +15,7 @@ const Login = () => {
     console.log("Rendered");
 
     const auth = useAuth();
+    
 
     //const [nickName, setNickName] = useState('');
     //const [password, setPassword] = useState('');
@@ -83,6 +84,7 @@ const Login = () => {
             console.log(data);
 
             if(data) {
+
                 auth.login({obj, data});
             } else {
                 console.log('false');
@@ -92,7 +94,7 @@ const Login = () => {
 
     const login = (data) => {
         //e.preventDefault();
-
+        
         //setDataForm(data);
          if(data.role === 'estudiante') {
             llamadoEstudiantes(data); 
