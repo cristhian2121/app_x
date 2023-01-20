@@ -163,6 +163,16 @@ app.get("/messages/:studentId/:dressMakerId", async (req, res) => {
   return res.status(200).send(messages);
 });
 
+app.post("/messages", async (req, res) => {
+  const { body } = req
+  
+  const messageModel =  new MessageModel(body)
+  const as = messageModel.save(body)
+  return res.status(201).send(as);
+
+
+})
+
 // TODO: remove it
 app.get("/users", (req, res) => {
   // 200/201 -> ok/ok crear

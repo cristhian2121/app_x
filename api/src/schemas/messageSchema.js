@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 
+// ORM (server - base de datos)
 const Message = new mongoose.Schema({
     studentId: String,
-    dressMakerId: String,
+    dressMakerId: { type: String, require: false },
     userType: String,
     dateCreated: Date,
     message: String,
