@@ -14,10 +14,10 @@ const AuthProvider = ({children}) => {
     const login = ( userinfo ) => {
         
         setUser( userinfo );
-        console.log( userinfo );
+        //console.log( userinfo );
         //console.log("Este rol es:", username.role);
 
-        userinfo.dataForm.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
+        userinfo.obj.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
     }
 
     //Lo necesitamos para la autenticacion

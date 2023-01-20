@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, Typography } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { useForm, Controller } from "react-hook-form";
@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const schema = yup.object({
-    email: yup.string().required().email("Pon un email"),
+    email: yup.string().required().email("Debe ser un email válido"),
   });
 
 const Login = () => {
@@ -16,11 +16,11 @@ const Login = () => {
 
     const auth = useAuth();
 
-    const [nickName, setNickName] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
+    //const [nickName, setNickName] = useState('');
+    //const [password, setPassword] = useState('');
+    //const [role, setRole] = useState('');
     
-    const [dataForm, setDataForm] = useState(null);
+    //const [dataForm, setDataForm] = useState(null);
 
     const { handleSubmit, control, formState:{ errors } } = useForm({
         defaultValues: {
@@ -37,8 +37,8 @@ const Login = () => {
     // pasarle el rol al auth para validar rutas
     // localstorage
 
-    const llamadoEstudiantes = () => {
-            console.log(dataForm);
+    const llamadoEstudiantes = (obj) => {
+            console.log(obj);
 
             const url = 'http://localhost:3100/students/login';
             const options = {
@@ -47,8 +47,8 @@ const Login = () => {
                 },
                 method: 'POST',
                 body: JSON.stringify({
-                    email: dataForm.email,
-                    password: dataForm.password,
+                    email: obj.email,
+                    password: obj.password,
                 }),
             }
 
@@ -57,14 +57,14 @@ const Login = () => {
             .then((data) => {
                 console.log(data);
                 if(data) {
-                    auth.login({dataForm, data});
+                    auth.login({obj, data});
                 } else {
                     console.log('false');
                 }
       });
     }
 
-    const llamadoModistas = () => {
+    const llamadoModistas = (obj) => {
         const url2 = 'http://localhost:3100/dressMakers/login';
         const options = {
             headers: {
@@ -72,8 +72,8 @@ const Login = () => {
             },
             method: 'POST',
             body: JSON.stringify({
-                password: password,
-                email: nickName,
+                email: obj.email,
+                password: obj.password,
             }),
         }
 
@@ -83,7 +83,7 @@ const Login = () => {
             console.log(data);
 
             if(data) {
-                auth.login({nickName, role});
+                auth.login({obj, data});
             } else {
                 console.log('false');
             }
@@ -93,11 +93,11 @@ const Login = () => {
     const login = (data) => {
         //e.preventDefault();
 
-        setDataForm(data);
+        //setDataForm(data);
          if(data.role === 'estudiante') {
-            llamadoEstudiantes(); 
+            llamadoEstudiantes(data); 
         } else {
-            llamadoModistas();
+            llamadoModistas(data);
         }
     };
 
@@ -122,15 +122,19 @@ const Login = () => {
                   //     //... proceso
                   //     field.onBlur(e)
                   // }}
+                  error={false}
                   required
+                  helperText={errors.email?.message}
                   id="outlined-required"
                   label="Email"
                   sx={{ mb: 3 }}
                 />
               )}
             />
-            {errors.Email ? <p>{errors.Email.message}</p> : null}
+            {/* En caso de un email no valido */}
+            {/* {errors.email ? <Typography sx={{ textAlign: 'center' }} variant='overline'>{errors.email.message}</Typography> : null} */}
 
+            {/* Input anterior para el email */}
             {/* <TextField value={nickName} onChange={e => setNickName(e.target.value) } required id="outlined-required" label="Email" sx={{ mb: 3}} /> */}
 
             <Box sx={{ mb: 3, minWidth: 120 }}>
