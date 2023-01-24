@@ -9,16 +9,24 @@
 
 body {
     margin: 0;
-    font-family: 'Quicksand', sans-serif; 
+    font-family: 'Quicksand', sans-serif;
+    background-image: url(../assets/bg.svg);
+
 }
+
 .login{
-    width: 100%;
+    width: 35%;
+    min-width: 450px;
     height: 80vh;
-    display: grid;
+    background-color: #FFFFFF;
+    border-radius: 25px;
     place-items: center;
+    display: grid;
+    align-content: center;
 }
 .form-container {
     display: grid;
+    /* align-content: center; */
     /* grid-template-rows: auto 1fr auto; */
     width: 300px;
 }

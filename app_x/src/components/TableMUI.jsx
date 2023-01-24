@@ -2,30 +2,31 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { Box } from '@mui/material';
 
 export default function DataTable({data}) {
 
     const navigate = useNavigate();
 
-    const handleOnClick = (el) => {
-        console.log("**");
-        //navigate(`/user/${el.id}`);
+    const handleOnClick = (data) => {
+        console.log(data.row);
+        navigate(`/user/${data.row._id}`,  { state: { data } });
       }; 
 
     const columns = [
-        { field: 'firstName', headerName: 'First Name', width: 130 },
-        { field: 'lastName', headerName: 'Last Name', width: 130 },
-        { field: 'nickName', headerName: 'Nick name', width: 230 },
-        { field: 'gender', headerName: 'Genero', width: 80 },
+        { field: 'firstName', headerName: 'Nombre', width: 130 },
+        { field: 'lastName', headerName: 'Apellido', width: 130 },
+        { field: 'nickName', headerName: 'Correo', width: 230 },
+        { field: 'gender', headerName: 'Género', width: 80 },
         { field: 'shirtSize', headerName: 'Talla', width: 80 },
         { field: 'deliveryDate', headerName: 'Fecha de entrega', width: 130 },
         {
           field: 'actions',
           headerName: 'Actions',
           width: 90,
-          renderCell: (data) => {
+          renderCell: ( rowData ) => {
               return (
-                  <Button variant="contained">Detail</Button>
+                  <Button onClick={ () => handleOnClick(rowData)} variant="contained">Detalle</Button>
               )
           }
       
@@ -35,9 +36,7 @@ export default function DataTable({data}) {
       const rows = data;
 
   return (
-    <div 
-    style={{  width: '65%' }}
-    >
+    <Box sx={{ width: '80%'}}>
       <DataGrid
         getRowId={(row) => row._id}
         rows={rows}
@@ -47,6 +46,6 @@ export default function DataTable({data}) {
         autoPageSize
         disableSelectionOnClick
       />
-    </div>
+    </Box>
   );
 }

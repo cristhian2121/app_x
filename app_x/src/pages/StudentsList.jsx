@@ -1,3 +1,4 @@
+import { Container, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import DataTable from '../components/TableMUI';
 
@@ -15,12 +16,10 @@ const StudentsList = () => {
         }, []);
 
   return (
-    <>
-        <div className='listado-estudiantes'>
-        <h2>Estudiantes</h2>
+    <Container sx={{backgroundColor: 'white', height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+        <Typography sx={{p: 2}} variant='h4'>Estudiantes</Typography>
         <DataTable data={data} />
-        </div>
-    </>
+    </Container>
   )
 }
 

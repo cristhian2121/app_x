@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, Typography } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { useForm, Controller } from "react-hook-form";
@@ -105,9 +105,9 @@ const Login = () => {
 
   return (
     <>
+    <Box sx={{height: '100vh' , display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="login">
-        <h1>Uniformes la 23</h1>
-
+        <Typography variant='h3' sx={{mb: 6}}>Uniformes la 23</Typography>
         <div className="form-container">
           <form
             action="/"
@@ -197,6 +197,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      </Box>
     </>
   );
 }
