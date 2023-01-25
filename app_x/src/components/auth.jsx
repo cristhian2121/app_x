@@ -9,16 +9,23 @@ const AuthContext = React.createContext();
 const AuthProvider = ({children}) => {
 
     const navigate = useNavigate();
-    const [user, setUser] = React.useState(null);
+    const [user, setUser] = React.useState(null); // useReducer, setUser = null (useeffect) -> logout
+    //const [userSession, setUserSession] = useSessionStorage("user")
     
     const login = ( userinfo ) => {
         
         setUser( userinfo );
+        // setUserSession(userinfo)
+
         //console.log( userinfo );
         //console.log("Este rol es:", username.role);
 
         userinfo.obj.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
     }
+
+    // const logout = () => {
+        // setUserSession(userinfo)   
+    // }
 
     //Lo necesitamos para la autenticacion
     const auth = { user, login };
