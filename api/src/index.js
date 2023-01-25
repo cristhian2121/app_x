@@ -91,7 +91,7 @@ app.post("/students/login", async (req, res) => {
     return res.status(401).send(false)
   }
 
-  return res.status(200).send(true)
+  return res.status(200).send(student)
 });
 
 //////////// DressMaker ////////////

@@ -9,14 +9,13 @@ const Profile = () => {
   console.log('Render del profile');
   const {user} = useAuth();
   const {setTitle} = React.useContext(TitleContext);
-
+  
   React.useEffect(() => {
-    console.log('Poniendo nombre en header');
+    console.log("Poniendo nombre en header");
     setTitle(user.data.firstName);
+  }, [user]);
   
-  }, [])
-  
-
+  console.log(user)
   let initLetterName = user.data.firstName.charAt(0);
 
   return (

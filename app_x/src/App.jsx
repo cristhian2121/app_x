@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import { AuthProvider, AuthRoute } from "./components/auth";
 import StudentsList from "./pages/StudentsList";
 import DetalleEstudiante from "./components/DetalleEstudiante";
+import NotFound from "./pages/NotFound";
 
 //1. hacer la llamada a la api aca en lugar de home
 //2. los id en los datos retornaban el siguiente id
@@ -44,13 +45,12 @@ function App() {
                 </WrapperWithPermission>
               } />
             </Route>
-            <Route path="/user/:id" element={
-            
-              <DetalleEstudiante />
-            
+
+            <Route path="/student/:id" element={
+              <DetalleEstudiante />            
             } />
 
-            <Route path="*" element={<h1>Not found</h1>} />
+            <Route path="*" element={<NotFound/>} />
           </Routes>
 
         </AuthProvider>

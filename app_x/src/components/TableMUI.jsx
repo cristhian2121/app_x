@@ -10,7 +10,9 @@ export default function DataTable({data}) {
 
     const handleOnClick = (data) => {
         console.log(data.row);
-        navigate(`/user/${data.row._id}`,  { state: { data } });
+        navigate(`/student/${data.row._id}`,  
+        // { state: { data } }
+        );
       }; 
 
     const columns = [
