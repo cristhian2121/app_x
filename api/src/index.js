@@ -117,7 +117,7 @@ app.post("/dressMakers/login", async (req, res) => {
     return res.status(401).send(false)
   }
 
-  return res.status(200).send(true)
+  return res.status(200).send(dressMaker)
 });
 
 app.get("/dressMakers/:id", async (req, res) => {
