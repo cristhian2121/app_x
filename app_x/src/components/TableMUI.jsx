@@ -11,7 +11,6 @@ export default function DataTable({data}) {
     const handleOnClick = (data) => {
         console.log(data.row);
         navigate(`/student/${data.row._id}`,  
-        // { state: { data } }
         );
       }; 
 

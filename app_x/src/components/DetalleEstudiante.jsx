@@ -1,25 +1,38 @@
 import { Container, Typography } from '@mui/material'
-import React from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import DetallesInfo from './DetallesInfo';
 
 const DetalleEstudiante = () => {
-    //const { id } = useParams();
-     //const location = useLocation()
-     // State -> student
-     console.log(location)
 
-     // getStudent -> fetch -> setState
+  const [student, setStudent] = useState({});
 
-     //useEffect - first render -> call getStudent
+  // State -> student
+  const { id } = useParams();
+  const url = `http://localhost:3100/students/${id}`;
 
-    const location = useLocation();
-    //const myData = location.state.data;
+  // getStudent -> fetch -> setState
+  const getStudent = () => {
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data) {
+            setStudent(data);
+          } else {
+            console.log("false");
+          }
+        });
+}
+      //useEffect - first render -> call getStudent
+  useEffect(() => {
+    getStudent();
+  }, []);
 
-     console.log( params)
   return (
-    <Container sx={{backgroundColor: 'white', height: '95vh'}}>
-        <Typography variant='h4'>Hi</Typography>
-        <Typography variant='h6'>{state?.data.firstName}</Typography>
+    <Container sx={{backgroundColor: 'white', height: '100vh'}}>
+        <Typography variant='h4'>{student.firstName}</Typography>
+        <DetallesInfo user={student} />
     </Container>
   )
 }

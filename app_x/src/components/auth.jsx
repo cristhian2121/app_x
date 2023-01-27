@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import useSessionStorage from '../hooks/useSessionStorage';
 
 
 //docker compose up --build --force-recreate
@@ -11,11 +12,12 @@ const AuthProvider = ({children}) => {
     const navigate = useNavigate();
     const [user, setUser] = React.useState(null); // useReducer, setUser = null (useeffect) -> logout
     //const [userSession, setUserSession] = useSessionStorage("user")
-    
+    const [value, saveUser] = useSessionStorage("user");
+
     const login = ( userinfo ) => {
         
         setUser( userinfo );
-        // setUserSession(userinfo)
+        // saveUser(userinfo)
 
         //console.log( userinfo );
         //console.log("Este rol es:", username.role);
@@ -47,7 +49,8 @@ function useAuth() {
 //querramos proteger una ruta
 function AuthRoute(props) {
     const auth = useAuth();
-    if ( !auth.user) {
+    const [users] = useSessionStorage("user");
+    if ( !users) {
         return <Navigate to={'/'} />
     }
     return props.children;

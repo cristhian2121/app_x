@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import './Login.css';
 import { useAuth } from '../components/auth';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import useSessionStorage from '../hooks/useSessionStorage';
 
 const schema = yup.object({
     email: yup.string().required().email("Debe ser un email válido"),
@@ -14,14 +23,15 @@ const schema = yup.object({
 const Login = () => {
     console.log("Rendered");
 
+    const [users, saveUsers] = useSessionStorage('user', '');
     const auth = useAuth();
     
-
-    //const [nickName, setNickName] = useState('');
-    //const [password, setPassword] = useState('');
-    //const [role, setRole] = useState('');
-    
-    //const [dataForm, setDataForm] = useState(null);
+/*
+const [nickName, setNickName] = useState('');
+const [password, setPassword] = useState('');
+const [role, setRole] = useState('');
+const [dataForm, setDataForm] = useState(null);
+*/
 
     const { handleSubmit, control, formState:{ errors } } = useForm({
         defaultValues: {
@@ -39,7 +49,7 @@ const Login = () => {
     // localstorage
 
     const llamadoEstudiantes = (obj) => {
-            console.log(obj);
+            //console.log(obj, 'Credenciales para login');
 
             const url = 'http://localhost:3100/students/login';
             const options = {
@@ -56,9 +66,10 @@ const Login = () => {
         fetch(url, options)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+                //console.log(data, "Return del post para login");
                 if(data) {
                     auth.login({obj, data});
+                    saveUsers(data);
                 } else {
                     console.log('false');
                 }
@@ -81,10 +92,8 @@ const Login = () => {
     fetch(url2, options)
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
-
+            //console.log(data, "Return del post para login");
             if(data) {
-
                 auth.login({obj, data});
             } else {
                 console.log('false');
