@@ -3,7 +3,7 @@ import React from 'react'
 
 const Message = () => {
   return (
-    <Box sx={{display: 'flex', width: '50%'}}>
+    <Box sx={{display: 'flex', width: '50%', minWidth: '400px'}}>
         <Avatar sx={{mt: 1}}>C</Avatar>
         <div>
             <Box sx={{display: 'flex', alignItems: 'center', gap: 1, p: 1}}>

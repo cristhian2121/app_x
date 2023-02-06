@@ -7,12 +7,18 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { TitleContext } from "../context/TitleContext";
+import { useAuth } from "./auth";
 
 export default function Header() {
   const { title } = React.useContext(TitleContext);
+  const auth = useAuth();
+
+  const handleLogout = () => {
+    auth.logout();
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed', width: '100%', top: 0 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -27,7 +33,7 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Button color="inherit">Log out</Button>
+          <Button onClick={handleLogout} color="inherit">Log out</Button>
         </Toolbar>
       </AppBar>
     </Box>

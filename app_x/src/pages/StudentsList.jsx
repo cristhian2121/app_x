@@ -1,10 +1,14 @@
 import { Container, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useAuth } from '../components/auth';
 import DataTable from '../components/TableMUI';
+import { TitleContext } from '../context/TitleContext';
 
 const StudentsList = () => {
     const [data, setData] = useState([]);
-
+    const {user} = useAuth();
+    const {setTitle} = useContext(TitleContext);
+  
     useEffect(() => {
         fetch("http://localhost:3100/students")
           .then((res) => res.json())
@@ -12,7 +16,7 @@ const StudentsList = () => {
             //console.log(data);
             setData(data);
           });
-
+          setTitle(user.data.firstName);
         }, []);
 
   return (

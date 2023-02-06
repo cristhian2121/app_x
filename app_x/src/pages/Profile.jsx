@@ -20,8 +20,8 @@ const Profile = () => {
   const initLetterName = infoUser.firstName.charAt(0);
 
   return (
-    <Container sx={{ width: "80%", height: "100vh", backgroundColor: "white" }}>
-      <Typography variant="h4" sx={{ p: 2 }}>
+    <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
+      <Typography variant="h4" sx={{ pt: '80px' }}>
         Mi cuenta
       </Typography>
       <DetallesInfo user={infoUser} />

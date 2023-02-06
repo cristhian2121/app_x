@@ -1,18 +1,24 @@
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import React from 'react'
 
 const DetallesInfo = ({user}) => {
 
 
   return (
+    <Paper elevation={3}>
     <Box
       sx={{
         display: "flex",
         justifyContent: "flex-start",
+        alignContent: 'center',
         flexDirection: "row",
+        flexWrap: 'wrap',
         height: 80,
+        minWidth: '400px',
+        margin: 2,
       }}
     >
+      
       <label htmlFor="name" className="label">
         Nombre:
       </label>
@@ -45,7 +51,8 @@ const DetallesInfo = ({user}) => {
         Password:
       </label>
       <p className="value">*********</p>
-    </Box>
+      </Box>
+    </Paper>
   );
 }
 

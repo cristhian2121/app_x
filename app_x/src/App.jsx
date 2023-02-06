@@ -1,8 +1,4 @@
-//import { useState, useEffect } from "react";
-//import { UserList } from "./components/UserList";
-//import Home from "./pages/Home";
-import { Routes, Route, json } from "react-router-dom";
-import Detail from "./pages/Detail";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import { TitleProvider } from "./context/TitleContext";
 import Login from "./pages/Login";
@@ -34,6 +30,7 @@ function App() {
             <Route path="/" element={<Login />} />
 
             <Route path="/" >
+              
               <Route path="/miuniforme" element={
                 <WrapperWithPermission>
                   <Profile />
@@ -47,7 +44,9 @@ function App() {
             </Route>
 
             <Route path="/student/:id" element={
-              <DetalleEstudiante />            
+              <WrapperWithPermission>
+                <DetalleEstudiante />            
+              </WrapperWithPermission>
             } />
 
             <Route path="*" element={<NotFound/>} />

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import useSessionStorage from '../hooks/useSessionStorage';
 
 
 //docker compose up --build --force-recreate
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {        
     const [userFromSession, setUserSession] = useSessionStorage("user")

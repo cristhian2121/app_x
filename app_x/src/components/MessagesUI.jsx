@@ -11,6 +11,7 @@ export default function MessagesUI() {
     <React.Fragment>
       <CssBaseline />
       <Paper
+        elevation={3}
         square
         sx={{
           p: 2,
