@@ -23,7 +23,7 @@ const schema = yup.object({
 const Login = () => {
     console.log("Rendered");
 
-    const [users, saveUsers] = useSessionStorage('user', '');
+    const [_, saveUsers] = useSessionStorage('user');
     const auth = useAuth();
     
 /*
@@ -69,7 +69,6 @@ const [dataForm, setDataForm] = useState(null);
                 //console.log(data, "Return del post para login");
                 if(data) {
                     auth.login({obj, data});
-                    saveUsers(data);
                 } else {
                     console.log('false');
                 }
@@ -116,7 +115,7 @@ const [dataForm, setDataForm] = useState(null);
     <>
     <Box sx={{height: '100vh' , display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="login">
-        <Typography variant='h3' sx={{mb: 6}}>Uniformes la 23</Typography>
+        <Typography variant='h3' sx={{mb: 6, fontFamily: 'Monospace'}}>Uniformes la 23</Typography>
         <div className="form-container">
           <form
             action="/"

@@ -1,17 +1,21 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 export default function DataTable({data}) {
 
     const navigate = useNavigate();
+    const location = useLocation()
+
 
     const handleOnClick = (data) => {
-        console.log(data.row);
-        navigate(`/student/${data.row._id}`,  
-        );
+        //console.log(data.row);
+
+        //navigate(`/student/${data.row._id}`, { state: {firstName: data.row.firstName}}); 
+        navigate(`/student/${data.row._id}`); 
+        
       }; 
 
     const columns = [

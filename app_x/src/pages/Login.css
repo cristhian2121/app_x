@@ -6,6 +6,9 @@
     --md: 16px;
     --lg: 18px;
 }
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
@@ -18,9 +21,11 @@ body {
     width: 35%;
     min-width: 450px;
     height: 80vh;
+    min-height: 660px;
     background-color: #FFFFFF;
     border-radius: 25px;
     place-items: center;
+    margin: 10px;
     display: grid;
     align-content: center;
 }

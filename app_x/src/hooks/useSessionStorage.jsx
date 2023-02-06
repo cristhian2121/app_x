@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function useSessionStorage(key, initialValue) {
+function useSessionStorage(key, initialValue=null) {
 
     //let seccionStorageUser = sessionStorage.getItem("user");
     let seccionStorageUser = sessionStorage.getItem(key);

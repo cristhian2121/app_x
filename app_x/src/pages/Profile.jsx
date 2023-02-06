@@ -9,11 +9,11 @@ const Profile = () => {
   console.log('Render del profile');
 
   const {user} = useAuth();
+  console.log(user, 'Profile');
   const {setTitle} = React.useContext(TitleContext);
   const infoUser = user.data;
   
   React.useEffect(() => {
-    //console.log("Poniendo nombre en header");
     setTitle(user.data.firstName);
   }, [user]);
   
@@ -21,8 +21,8 @@ const Profile = () => {
   let initLetterName = infoUser.firstName.charAt(0);
 
   return (
-    <Container sx={{ width: "80%", height: "100vh", backgroundColor: "white" }}>
-      <Typography variant="h4" sx={{ p: 2 }}>
+    <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
+      <Typography variant="h4" sx={{ pt: '80px' }}>
         Mi cuenta
       </Typography>
       <DetallesInfo user={infoUser} />

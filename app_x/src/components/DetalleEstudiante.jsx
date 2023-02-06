@@ -1,11 +1,16 @@
 import { Container, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import DetallesInfo from './DetallesInfo';
+import MessagesUI from './MessagesUI';
 
 const DetalleEstudiante = () => {
 
   const [student, setStudent] = useState({});
+
+  //Para enviar parametros desde TableMUI
+  //const location = useLocation();
+  //console.log(location, "hi this is me")
 
   // State -> student
   const { id } = useParams();
@@ -30,9 +35,10 @@ const DetalleEstudiante = () => {
   }, []);
 
   return (
-    <Container sx={{backgroundColor: 'white', height: '100vh'}}>
-        <Typography variant='h4'>{student.firstName}</Typography>
+    <Container sx={{backgroundColor: 'white', height: '100vh', width: '90%', minWidth: '450px'}}>
+        <Typography sx={{pt: '80px'}} variant='h4'>{student.firstName}</Typography>
         <DetallesInfo user={student} />
+        <MessagesUI />
     </Container>
   )
 }
