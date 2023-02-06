@@ -6,19 +6,18 @@ import MessagesUI from '../components/MessagesUI';
 import { TitleContext } from '../context/TitleContext';
 
 const Profile = () => {
-  console.log('Render del profile');
 
-  const {user} = useAuth();
+  const { auth } = useAuth();
   const {setTitle} = React.useContext(TitleContext);
-  const infoUser = user.data;
+  const infoUser = auth?.data;
   
   React.useEffect(() => {
-    //console.log("Poniendo nombre en header");
-    setTitle(user.data.firstName);
-  }, [user]);
+    if(auth?.data){
+      setTitle(auth.data.firstName);
+    }
+  }, [auth]);
   
-  //console.log(user)
-  let initLetterName = infoUser.firstName.charAt(0);
+  const initLetterName = infoUser.firstName.charAt(0);
 
   return (
     <Container sx={{ width: "80%", height: "100vh", backgroundColor: "white" }}>

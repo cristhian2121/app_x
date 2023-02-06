@@ -15,23 +15,25 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import useSessionStorage from '../hooks/useSessionStorage';
+import { useEffect } from 'react';
+import { Route, useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
     email: yup.string().required().email("Debe ser un email válido"),
   });
 
 const Login = () => {
-    console.log("Rendered");
+  const navigate = useNavigate();
 
     const [users, saveUsers] = useSessionStorage('user', '');
-    const auth = useAuth();
-    
-/*
-const [nickName, setNickName] = useState('');
-const [password, setPassword] = useState('');
-const [role, setRole] = useState('');
-const [dataForm, setDataForm] = useState(null);
-*/
+    const contex = useAuth();
+
+    useEffect(() => {
+      if(contex?.auth?.data.nickName){
+        // TODO: Validar con el API 
+        contex.auth.obj.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
+      }
+    },[])
 
     const { handleSubmit, control, formState:{ errors } } = useForm({
         defaultValues: {
@@ -43,36 +45,32 @@ const [dataForm, setDataForm] = useState(null);
         
     });
 
-    //ToDO
+    // ToDO
     // funcion para llamado de modistas llamadomodistas
     // pasarle el rol al auth para validar rutas
     // localstorage
 
     const llamadoEstudiantes = (obj) => {
-            //console.log(obj, 'Credenciales para login');
+      const url = 'http://localhost:3100/students/login';
+      const options = {
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          method: 'POST',
+          body: JSON.stringify({
+              email: obj.email,
+              password: obj.password,
+          }),
+      }
 
-            const url = 'http://localhost:3100/students/login';
-            const options = {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    email: obj.email,
-                    password: obj.password,
-                }),
-            }
-
-        fetch(url, options)
-            .then((res) => res.json())
-            .then((data) => {
-                //console.log(data, "Return del post para login");
-                if(data) {
-                    auth.login({obj, data});
-                    saveUsers(data);
-                } else {
-                    console.log('false');
-                }
+      fetch(url, options)
+        .then((res) => res.json())
+        .then((data) => {          
+          if(data) {
+            contex.login({obj, data});
+          } else {
+              console.log('false');
+          }
       });
     }
 
@@ -94,17 +92,15 @@ const [dataForm, setDataForm] = useState(null);
         .then((data) => {
             //console.log(data, "Return del post para login");
             if(data) {
-                auth.login({obj, data});
+                contex.login({obj, data});
             } else {
                 console.log('false');
             }
   });
 }
 
-    const login = (data) => {
-        //e.preventDefault();
-        
-        //setDataForm(data);
+    const login = (data,e) => {
+        e.preventDefault();
          if(data.role === 'estudiante') {
             llamadoEstudiantes(data); 
         } else {

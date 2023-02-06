@@ -7,30 +7,26 @@ import useSessionStorage from '../hooks/useSessionStorage';
 
 const AuthContext = React.createContext();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({children}) => {        
+    const [userFromSession, setUserSession] = useSessionStorage("user")
+    const [user, setUser] = React.useState(userFromSession?.nickName ? { data: userFromSession} : null); // useReducer, setUser = null (useeffect) -> logout    
 
-    const navigate = useNavigate();
-    const [user, setUser] = React.useState(null); // useReducer, setUser = null (useeffect) -> logout
-    //const [userSession, setUserSession] = useSessionStorage("user")
-    const [value, saveUser] = useSessionStorage("user");
-
-    const login = ( userinfo ) => {
-        
-        setUser( userinfo );
-        // saveUser(userinfo)
-
-        //console.log( userinfo );
-        //console.log("Este rol es:", username.role);
-
-        userinfo.obj.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
+    if(userFromSession?.data && !user){
+        setUser(userFromSession)
     }
 
-    // const logout = () => {
-        // setUserSession(userinfo)   
-    // }
+    const login = ( userinfo ) => {     
+        setUser( userinfo );   
+        setUserSession(userinfo)     
+    }
+
+    const logout = () => {        
+        setUser(null)
+        setUserSession({})
+    }
 
     //Lo necesitamos para la autenticacion
-    const auth = { user, login };
+    const auth = { user, login, logout };
 
   return (
     <AuthContext.Provider value={auth}>
@@ -41,17 +37,31 @@ const AuthProvider = ({children}) => {
 
 //Para evitar escribir useContext en los componentes 
 function useAuth() {
-    const auth = React.useContext(AuthContext);
-    return auth;
+    const navigate = useNavigate();
+    const context = React.useContext(AuthContext);
+    
+    const login = ( userinfo ) => {
+        context.login(userinfo)
+        // Redirect
+        userinfo.obj.role === "estudiante" ? navigate('/miuniforme') : navigate('/estudiantes');
+    }
+
+    const logout = () => {
+        context.logout()
+        // Redirect
+        navigate('/');
+    }
+
+    return {auth: context.user, login, logout};
 }
 
 //es un componente para evitar escribir Navigate en los componentes donde 
 //querramos proteger una ruta
 function AuthRoute(props) {
     const auth = useAuth();
-    const [users] = useSessionStorage("user");
-    if ( !users) {
-        return <Navigate to={'/'} />
+    if (!auth) {
+        console.log("no exists");
+        // return <Navigate to={'/'} />
     }
     return props.children;
 }
