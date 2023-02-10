@@ -1,20 +1,28 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import React from 'react'
 
-const Message = () => {
-  return (
-    <Box sx={{display: 'flex', width: '50%', minWidth: '400px'}}>
-        <Avatar sx={{mt: 1}}>C</Avatar>
-        <div>
-            <Box sx={{display: 'flex', alignItems: 'center', gap: 1, p: 1}}>
-                <Typography variant='h6'>Cesar Fontalvo</Typography>
-                <Typography variant='overline' sx={{fontSize: 10}}>Nov 17, 4:23 PM</Typography>
-            </Box>
-            <Typography variant='body2' sx={{p:1}}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium dolore velit ipsa ad, nisi illo, consectetur ab assumenda impedit asperiores dolorem modi molestias porro beatae ullam exercitationem, corporis eaque placeat.</Typography>
-        </div>
+const Message = ({ msg, userName}) => {
 
+  const initLetterName = userName.charAt(0);
+
+  return (
+    <Box sx={{ display: "flex", width: "50%", minWidth: "400px" }}>
+      <Box sx={{pt: 2}}>
+        <Avatar sx={{ width: 30, height: 30 }}>{initLetterName}</Avatar>
+      </Box>
+      <Box sx={{p: 1}}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Typography variant="subtitle2">{userName}</Typography>
+          <Typography variant="overline" sx={{ fontSize: 10 }}>
+            {msg.dateCreated}
+          </Typography>
+        </Box>
+        <Typography variant="body2" >
+          {msg.message}
+        </Typography>
+      </Box>
     </Box>
-  )
+  );
 }
 
 export default Message

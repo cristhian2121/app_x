@@ -112,7 +112,7 @@ const Login = () => {
     <>
     <Box sx={{height: '100vh' , display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <div className="login">
-        <Typography variant='h3' sx={{mb: 6, fontFamily: 'Monospace'}}>Uniformes la 23</Typography>
+        <Typography variant='h3' sx={{mb: 6, fontFamily: 'Montserrat'}}>Uniformes la 23</Typography>
         <div className="form-container">
           <form
             action="/"
@@ -152,6 +152,7 @@ const Login = () => {
                 <Controller
                   control={control}
                   name="role"
+                  required
                   render={({ field }) => (
                     <Select
                       {...field}

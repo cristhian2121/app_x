@@ -11,6 +11,7 @@ const AuthProvider = ({children}) => {
     const [userFromSession, setUserSession] = useSessionStorage("user")
     const [user, setUser] = React.useState(userFromSession?.nickName ? { data: userFromSession} : null); // useReducer, setUser = null (useeffect) -> logout    
 
+    //Cuando se recargue la pagina esto revisa si hay un user ya
     if(userFromSession?.data && !user){
         setUser(userFromSession)
     }
