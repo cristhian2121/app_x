@@ -8,10 +8,15 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { TitleContext } from "../context/TitleContext";
 import { useAuth } from "./auth";
+import { useModal } from '../hooks/useModal';
+import { Modal } from './Modal'
 
 export default function Header() {
   const { title } = React.useContext(TitleContext);
   const auth = useAuth();
+
+  const [isOpenModal1, openModal1, closeModal1] = useModal(false);
+
 
   const handleLogout = () => {
     auth.logout();
@@ -33,7 +38,15 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Button onClick={handleLogout} color="inherit">Log out</Button>
+          <Button onClick={openModal1} color="inherit">Log out</Button>
+
+          <Modal isOpen={isOpenModal1} closeModal={closeModal1} >
+            <Typography variant="h6" gutterBottom>Deseas salir?</Typography>
+            <Box sx={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', height: '100px'}}>
+            <Button onClick={handleLogout} variant="contained">Salir</Button>
+            <Button onClick={closeModal1} variant="outlined">Cancelar</Button>
+            </Box>
+          </Modal>
         </Toolbar>
       </AppBar>
     </Box>

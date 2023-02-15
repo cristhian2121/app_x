@@ -1,20 +1,20 @@
 import { Container, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import DetallesInfo from './DetallesInfo';
 import MessagesUI from './MessagesUI';
+import { useAuth } from '../components/auth';
 
 const DetalleEstudiante = () => {
 
   const [student, setStudent] = useState({});
-
-  //Para enviar parametros desde TableMUI
-  //const location = useLocation();
-  //console.log(location, "hi this is me")
+  const [mensaje, setMensaje] = useState([]);
+  const {auth} = useAuth();
 
   // State -> student
   const { id } = useParams();
   const url = `http://localhost:3100/students/${id}`;
+  const urlMessage = `http://localhost:3100/messages/${id}/${auth.data._id}`;
 
   // getStudent -> fetch -> setState
   const getStudent = () => {
@@ -29,16 +29,50 @@ const DetalleEstudiante = () => {
           }
         });
 }
+
+  const getMessages = () => {
+    fetch(urlMessage)
+    .then((res) => res.json())
+    .then((data) => {
+      setMensaje(data.reverse());
+    });
+  }
+
+  const enviarMensajes = (message) => {
+    const url = 'http://localhost:3100/messages';
+    const options = {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            studentId: id,
+            dressMakerId: auth.data._id,
+            userType: 'modista',
+            dateCreated: Date.now(),
+            message: message,
+        }),
+    }
+
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((data) => {  
+        getMessages();        
+        //console.log(data);
+    });
+  }
+
       //useEffect - first render -> call getStudent
   useEffect(() => {
     getStudent();
+    getMessages();
   }, []);
 
   return (
     <Container sx={{backgroundColor: 'white', height: '100vh', width: '90%', minWidth: '450px'}}>
         <Typography sx={{pt: '80px'}} variant='h4'>{student.firstName}</Typography>
         <DetallesInfo user={student} />
-        <MessagesUI />
+        <MessagesUI mensajes={mensaje} user={student} dressMaker={auth.data} role='modista' enviarMensajes={enviarMensajes} />
     </Container>
   )
 }

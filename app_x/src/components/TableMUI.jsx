@@ -10,11 +10,11 @@ export default function DataTable({data}) {
     const location = useLocation()
 
 
-    const handleOnClick = (data) => {
+    const handleOnClick = (user) => {
         //console.log(data.row);
 
         //navigate(`/student/${data.row._id}`, { state: {firstName: data.row.firstName}}); 
-        navigate(`/student/${data.row._id}`); 
+        navigate(`/student/${user.row._id}`); 
         
       }; 
 

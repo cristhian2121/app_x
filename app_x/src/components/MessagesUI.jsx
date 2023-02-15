@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useState, useEffect} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
@@ -6,11 +6,9 @@ import Message from './Message';
 
 
 
-export default function MessagesUI({ llamadoMensajes, user }) {
+export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker, role }) {
 
-  const [message, setMessage] = React.useState('');
-  const [data, setData] = React.useState([]);
-  const url = `http://localhost:3100/messages/${user._id}`;
+  const [message, setMessage] = useState('');
 
   const userName = user.firstName;
 
@@ -18,20 +16,12 @@ export default function MessagesUI({ llamadoMensajes, user }) {
     setMessage(e.target.value);
   }
   const handleMessage = () => {
-    llamadoMensajes(message);
+    enviarMensajes(message);
     setMessage('');
   }
 
-  React.useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data)
-      });
-    }, []);
-
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Paper
         elevation={3}
@@ -50,24 +40,26 @@ export default function MessagesUI({ llamadoMensajes, user }) {
         elevation={0}
         square
         sx={{
-          // p: 2,
+          pr: 2,
+          pl: 2,
           height: "89%",
           width: '100%',
           display: "flex",
-          flexDirection: 'column',
+          flexDirection: 'column-reverse',
           justifyContent: "space-between",
+          alignContent: 'center',
           overflow: "scroll",
         }}
         >
         {
-        data.map( (msg) => (
-          <Message msg={msg} userName={userName} key={msg._id} />
+        mensajes.map( (msg) => (
+          <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
         ))
         }
         </Paper>
 
         <Paper
-          component="form"
+          //component="form"
           sx={{
             p: "2px 4px",
             display: "flex",
@@ -95,6 +87,6 @@ export default function MessagesUI({ llamadoMensajes, user }) {
           </IconButton>
         </Paper>
       </Paper>
-    </React.Fragment>
+    </>
   );
 }

@@ -9,9 +9,12 @@ const Profile = () => {
 
   const { auth } = useAuth();
   const {setTitle} = React.useContext(TitleContext);
-
+  const [mensajes, setMensajes] = React.useState([]);
+  
+  
   //Objeto con los datos del usuario
   const infoUser = auth?.data;
+  const url = `http://localhost:3100/messages/${infoUser._id}`;
   
   //Para cambiar el nombre en el header
   React.useEffect(() => {
@@ -20,8 +23,15 @@ const Profile = () => {
     }
   }, [auth]);
   
+  const getMessages = () => {
+      fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setMensajes(data.reverse())
+      });
+  }
 
-  const llamadoMensajes = (message) => {
+  const enviarMensajes = (message) => {
     const url = 'http://localhost:3100/messages';
     const options = {
         headers: {
@@ -30,7 +40,7 @@ const Profile = () => {
         method: 'POST',
         body: JSON.stringify({
             studentId: infoUser._id,
-            dressMakerId: '63b8eeb91b7fc428d0dc1354',
+            //dressMakerId: '63b8eeb91b7fc428d0dc1354',
             userType: 'estudiante',
             dateCreated: Date.now(),
             message: message,
@@ -39,12 +49,16 @@ const Profile = () => {
 
     fetch(url, options)
       .then((res) => res.json())
-      .then((data) => {          
-        console.log(data);
+      .then((data) => {  
+        getMessages();        
+        //console.log(data);
     });
   }
 
-
+  React.useEffect(() => {
+    getMessages();
+  }, [])
+  
   return (
     <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
       <Typography variant="h4" sx={{ pt: '80px' }}>
@@ -53,7 +67,7 @@ const Profile = () => {
 
       <DetallesInfo user={infoUser} />
 
-      <MessagesUI user={infoUser} llamadoMensajes={llamadoMensajes}/>
+      <MessagesUI mensajes={mensajes} user={infoUser} role='estudiante' enviarMensajes={enviarMensajes}/>
       
     </Container>
   );

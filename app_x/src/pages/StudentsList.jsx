@@ -6,17 +6,21 @@ import { TitleContext } from '../context/TitleContext';
 
 const StudentsList = () => {
     const [data, setData] = useState([]);
-    const {user} = useAuth();
+    const {auth} = useAuth();
     const {setTitle} = useContext(TitleContext);
   
-    useEffect(() => {
-        fetch("http://localhost:3100/students")
+    const getStudents = () => {
+      fetch("http://localhost:3100/students")
           .then((res) => res.json())
           .then((data) => {
             //console.log(data);
             setData(data);
           });
-          setTitle(user.data.firstName);
+    }
+        useEffect(() => {
+          getStudents();
+          console.log(auth)
+          setTitle(auth?.data.firstName);
         }, []);
 
   return (
