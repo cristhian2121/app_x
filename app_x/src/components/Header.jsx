@@ -38,8 +38,8 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <Button onClick={openModal1} color="inherit">Log out</Button>
 
+          <Button onClick={openModal1} color="inherit">Log out</Button>
           <Modal isOpen={isOpenModal1} closeModal={closeModal1} >
             <Typography variant="h6" gutterBottom>Deseas salir?</Typography>
             <Box sx={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', height: '100px'}}>
@@ -48,7 +48,7 @@ export default function Header() {
             </Box>
           </Modal>
         </Toolbar>
-      </AppBar>
+      </AppBar> 
     </Box>
   );
 }

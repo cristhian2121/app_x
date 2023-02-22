@@ -1,4 +1,4 @@
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import './Modal.css';
 import CloseIcon from '@mui/icons-material/Close';
 

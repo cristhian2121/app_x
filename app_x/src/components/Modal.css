@@ -10,11 +10,9 @@
     justify-content: center;
     align-items: center;
 }
-
 .modal.is-open {
     display: flex;
 }
-
 .modal-container {
     position: relative;
     padding: 2rem;
@@ -32,7 +30,6 @@
     top: 1rem;
     right: 1rem;
 }
-
 .modal-img {
     width: 400px;
     height: 400px;

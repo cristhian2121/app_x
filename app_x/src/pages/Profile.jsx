@@ -10,6 +10,8 @@ const Profile = () => {
   const { auth } = useAuth();
   const {setTitle} = React.useContext(TitleContext);
   const [mensajes, setMensajes] = React.useState([]);
+  const [modista, setModista] = React.useState({});
+  const modistas = [];
   
   
   //Objeto con los datos del usuario
@@ -57,8 +59,36 @@ const Profile = () => {
 
   React.useEffect(() => {
     getMessages();
+    printDressmaker();
   }, [])
-  
+
+  React.useEffect(() => {
+    printDressmaker();
+  }, [mensajes])
+    
+
+  const getModista = (id) => {
+    fetch(`http://localhost:3100/dressmakers/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setModista(data);
+    });
+  }
+
+  const printDressmaker = () => {
+    mensajes.forEach( msg => {
+      if(msg.userType === 'modista') {
+        modistas.push(msg.dressMakerId);
+      } else {
+        return
+      }
+      getModista(modistas[0]);
+    });
+  }
+
+
+  console.log(modista)
+
   return (
     <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
       <Typography variant="h4" sx={{ pt: '80px' }}>
@@ -67,7 +97,7 @@ const Profile = () => {
 
       <DetallesInfo user={infoUser} />
 
-      <MessagesUI mensajes={mensajes} user={infoUser} role='estudiante' enviarMensajes={enviarMensajes}/>
+      <MessagesUI mensajes={mensajes} user={infoUser} dressMaker={modista} role='estudiante' enviarMensajes={enviarMensajes}/>
       
     </Container>
   );
