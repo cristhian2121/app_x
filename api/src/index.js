@@ -169,8 +169,6 @@ app.post("/messages", async (req, res) => {
   const messageModel =  new MessageModel(body)
   const as = messageModel.save(body)
   return res.status(201).send(as);
-
-
 })
 
 // TODO: remove it

@@ -1,5 +1,5 @@
 import { Avatar, Box, Container, Typography } from '@mui/material';
-import React from 'react'
+import React, { useRef } from 'react'
 import { useAuth } from '../components/auth'
 import DetallesInfo from '../components/DetallesInfo';
 import MessagesUI from '../components/MessagesUI';
@@ -11,7 +11,7 @@ const Profile = () => {
   const {setTitle} = React.useContext(TitleContext);
   const [mensajes, setMensajes] = React.useState([]);
   const [modista, setModista] = React.useState({});
-  const modistas = [];
+  const modistasRef = useRef([]);
   
   
   //Objeto con los datos del usuario
@@ -78,11 +78,11 @@ const Profile = () => {
   const printDressmaker = () => {
     mensajes.forEach( msg => {
       if(msg.userType === 'modista') {
-        modistas.push(msg.dressMakerId);
+        modistasRef.current.push(msg.dressMakerId);
       } else {
         return
       }
-      getModista(modistas[0]);
+      getModista(modistasRef.current[0]);
     });
   }
 
