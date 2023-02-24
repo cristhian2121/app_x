@@ -1,9 +1,11 @@
+import { TitleContext } from '@/contexts/TitleContext';
+import { useAuth } from '@/hooks/auth';
 import { Container, Typography } from '@mui/material';
 import React, { useRef } from 'react'
-import { useAuth } from '../../../../app_x/src/components/auth'
-import DetallesInfo from '../../../../app_x/src/components/DetallesInfo';
-import MessagesUI from '../../../../app_x/src/components/MessagesUI';
-import { TitleContext } from '../../../../app_x/src/context/TitleContext';
+
+import DetallesInfo from '@/app/components/DetallesInfo';
+import MessagesUI from '@/app/components/MessagesUI';
+
 
 const Profile = () => {
 
@@ -86,8 +88,6 @@ const Profile = () => {
       getModista(modistasRef.current[0]);
     });
   }
-
-
 
   return (
     <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
