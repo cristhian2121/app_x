@@ -1,9 +1,9 @@
 import { Container, Typography } from '@mui/material';
 import React, { useRef } from 'react'
-import { useAuth } from '../components/auth'
-import DetallesInfo from '../components/DetallesInfo';
-import MessagesUI from '../components/MessagesUI';
-import { TitleContext } from '../context/TitleContext';
+import { useAuth } from '../../../../app_x/src/components/auth'
+import DetallesInfo from '../../../../app_x/src/components/DetallesInfo';
+import MessagesUI from '../../../../app_x/src/components/MessagesUI';
+import { TitleContext } from '../../../../app_x/src/context/TitleContext';
 
 const Profile = () => {
 

@@ -1,15 +1,17 @@
-import { Container, Typography } from '@mui/material'
+import { Container, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import DetallesInfo from './DetallesInfo';
 import MessagesUI from './MessagesUI';
 import { useAuth } from '../components/auth';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const DetalleEstudiante = () => {
 
   const [student, setStudent] = useState({});
   const [mensaje, setMensaje] = useState([]);
   const {auth} = useAuth();
+  const navigate = useNavigate();
 
   // State -> student
   const { id } = useParams();
@@ -68,9 +70,18 @@ const DetalleEstudiante = () => {
     getMessages();
   }, []);
 
+  const handleBack = () => {
+    navigate(-1);
+  }
+
   return (
     <Container sx={{backgroundColor: 'white', height: '100vh', width: '90%', minWidth: '450px'}}>
-        <Typography sx={{pt: '80px'}} variant='h4'>{student.firstName}</Typography>
+        <IconButton
+        onClick={handleBack}
+        >
+          <ArrowBackIcon/>
+        </IconButton>
+        <Typography sx={{display: 'inline-block', pt: '80px'}} variant='h4'>{student.firstName}</Typography>
         <DetallesInfo user={student} />
         <MessagesUI mensajes={mensaje} user={student} dressMaker={auth.data} role='modista' enviarMensajes={enviarMensajes} />
     </Container>

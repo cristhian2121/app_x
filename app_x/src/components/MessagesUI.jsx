@@ -20,6 +20,14 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
     setMessage('');
   }
 
+  const handleEnter = (e) => {
+    if(e.key == "Enter") {
+      const divMensajes = document.getElementById('msgs');
+      //divMensajes.scroll({ top: 0, behavior: 'smooth' });
+      divMensajes.scrollTop= 0;
+      handleMessage();
+    }
+  }
 
   return (
     <>
@@ -40,6 +48,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
         <Paper
         elevation={0}
         square
+        id='msgs'
         sx={{
           pr: 2,
           pl: 2,
@@ -47,7 +56,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
           width: '100%',
           display: "flex",
           flexDirection: 'column-reverse',
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           alignContent: 'center',
           overflow: "scroll",
         }}
@@ -75,6 +84,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
             placeholder="Mensaje..."
             value={message}
             onChange={handleChange}
+            onKeyDown={handleEnter}
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 

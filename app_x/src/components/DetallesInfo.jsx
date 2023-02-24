@@ -37,7 +37,7 @@ const DetallesInfo = ({user}) => {
         Talla Uniforme:
       </label>
       <p className="value">{`${user.shirtSize} - ${
-        user.gender ? user.gender : ""
+        user.gender ? user.gender.toLowerCase() : ""
       }`}</p>
 
       <label htmlFor="deliveryDate" className="label">
