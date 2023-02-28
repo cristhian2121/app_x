@@ -24,7 +24,7 @@ const StudentsList = () => {
         }, []);
 
   return (
-    <Container sx={{backgroundColor: 'white', height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+    <Container sx={{backgroundColor: 'white', height: '100vh', paddingTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <Typography sx={{p: 2}} variant='h4'>Estudiantes</Typography>
         <DataTable data={data} />
     </Container>

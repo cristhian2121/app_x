@@ -11,17 +11,17 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pass12345
     volumes:
       - mongodb_app_x:/data/db
-  # app_x:
-  #   image: app-web
-  #   restart: always
-  #   container_name: app-x
-  #   build:
-  #     context: ./app_x
-  #   env_file: app_x/.env
-  #   ports:
-  #     - 3000:3000
-  #   volumes:
-  #     - ./app_x/src:/app/src
+  app_x:
+    image: app-web
+    restart: always
+    container_name: app-x
+    build:
+      context: ./app_x
+    env_file: app_x/.env
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app_x/src:/app/src
   api:
     image: user-api
     container_name: api-x

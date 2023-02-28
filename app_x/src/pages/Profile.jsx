@@ -11,9 +11,6 @@ const Profile = () => {
   const {setTitle} = React.useContext(TitleContext);
   const [mensajes, setMensajes] = React.useState([]);
   const [modista, setModista] = React.useState({});
-  const modistasRef = useRef([]);
-
-  
   
   //Objeto con los datos del usuario
   const infoUser = auth?.data;
@@ -53,7 +50,7 @@ const Profile = () => {
     fetch(url, options)
       .then((res) => res.json())
       .then((data) => {  
-        getMessages();        
+        getMessages();
         //console.log(data);
     });
   }
@@ -66,39 +63,52 @@ const Profile = () => {
   React.useEffect(() => {
     printDressmaker();
   }, [mensajes])
-    
 
-  const getModista = (id) => {
-    fetch(`http://localhost:3100/dressmakers/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setModista(data);
-    });
-  }
+  const printDressmaker = async () => {
 
-  const printDressmaker = () => {
-    mensajes.forEach( msg => {
-      if(msg.userType === 'modista') {
-        modistasRef.current.push(msg.dressMakerId);
-      } else {
-        return
-      }
-      getModista(modistasRef.current[0]);
+    const dressMakersIDs = mensajes
+      .filter((msj) => msj?.userType === "modista")
+      .map((item) => item?.dressMakerId);
+
+    const unique = dressMakersIDs.filter(
+      (item, i, ar) => ar.indexOf(item) === i
+    );
+    //const unique = [... new Set(dressMakersIDs)]
+
+    let dressMakerRequests = unique.map((id) => {
+      return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) =>
+        res.json()
+      );
     });
+    const responses = await Promise.all(dressMakerRequests);
+    setModista(responses);
   }
 
 
 
   return (
-    <Container sx={{ width: "80%", minWidth: '450px', height: "100vh", backgroundColor: "white" }}>
-        <Typography variant="h4" sx={{ pt: '80px' }}>
-          Mi cuenta
-        </Typography>
+    <Container
+      sx={{
+        width: "80%",
+        minWidth: "390px",
+        height: "80vh",
+        backgroundColor: "white",
+      }}
+      disableGutters
+    >
+      <Typography variant="h4" sx={{ ml: 2, pt: "80px" }}>
+        Mi cuenta
+      </Typography>
 
       <DetallesInfo user={infoUser} />
 
-      <MessagesUI mensajes={mensajes} user={infoUser} dressMaker={modista} role='estudiante' enviarMensajes={enviarMensajes}/>
-      
+      <MessagesUI
+        mensajes={mensajes}
+        user={infoUser}
+        dressMaker={modista}
+        role="estudiante"
+        enviarMensajes={enviarMensajes}
+      />
     </Container>
   );
 }

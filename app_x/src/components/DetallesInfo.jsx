@@ -5,19 +5,20 @@ const DetallesInfo = ({user}) => {
 
 
   return (
-    <Paper elevation={3}>
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignContent: 'center',
-        flexDirection: "row",
-        flexWrap: 'wrap',
-        height: 80,
-        minWidth: '400px',
-        margin: 2,
-      }}
-    >
+      <Paper
+        elevation={3}
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignContent: 'center',
+          flexDirection: "row",
+          flexWrap: 'wrap',
+          p: 2,
+          minWidth: '390px',
+          marginTop: 2,
+          marginBottom: 2,
+        }}
+      >
       
       <label htmlFor="name" className="label">
         Nombre:
@@ -51,8 +52,7 @@ const DetallesInfo = ({user}) => {
         Password:
       </label>
       <p className="value">*********</p>
-      </Box>
-    </Paper>
+      </Paper>
   );
 }
 

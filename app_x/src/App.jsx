@@ -7,6 +7,8 @@ import { AuthProvider, AuthRoute } from "./components/auth";
 import StudentsList from "./pages/StudentsList";
 import DetalleEstudiante from "./components/DetalleEstudiante";
 import NotFound from "./pages/NotFound";
+import Prueba from "./components/Prueba";
+import Prueba2 from "./components/Prueba2";
 
 //1. hacer la llamada a la api aca en lugar de home
 //2. los id en los datos retornaban el siguiente id
@@ -49,6 +51,13 @@ function App() {
               </WrapperWithPermission>
             } />
 
+            <Route path="/prueba" element={
+              <>
+              {/* <Header /> */}
+              <Prueba/>
+              </>
+            } />
+            <Route path="/prueba2" element={<Prueba2/>} />
             <Route path="*" element={<NotFound/>} />
           </Routes>
 

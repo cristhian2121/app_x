@@ -1,4 +1,4 @@
-import { Container, IconButton, Typography } from '@mui/material'
+import { Box, Container, IconButton, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import DetallesInfo from './DetallesInfo';
@@ -23,7 +23,7 @@ const DetalleEstudiante = () => {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          //console.log(data);
           if (data) {
             setStudent(data);
           } else {
@@ -75,17 +75,34 @@ const DetalleEstudiante = () => {
   }
 
   return (
-    <Container sx={{backgroundColor: 'white', height: '100vh', width: '90%', minWidth: '450px'}}>
-        <IconButton
-        onClick={handleBack}
-        >
-          <ArrowBackIcon/>
+    <Container
+      sx={{
+        backgroundColor: "white",
+        height: "calc(100vh - 65px)",
+        paddingTop: 10,
+        width: "90%",
+        minWidth: "390px",
+      }}
+      disableGutters
+    >
+      <Box sx={{pl: 1, display: "flex" }}>
+        <IconButton color="primary" onClick={handleBack}>
+          <ArrowBackIcon />
         </IconButton>
-        <Typography sx={{display: 'inline-block', pt: '80px'}} variant='h4'>{student.firstName}</Typography>
-        <DetallesInfo user={student} />
-        <MessagesUI mensajes={mensaje} user={student} dressMaker={auth.data} role='modista' enviarMensajes={enviarMensajes} />
+        <Typography sx={{ display: "inline-block" }} variant="h4">
+          {student.firstName}
+        </Typography>
+      </Box>
+      <DetallesInfo user={student} />
+      <MessagesUI
+        mensajes={mensaje}
+        user={student}
+        dressMaker={auth.data}
+        role="modista"
+        enviarMensajes={enviarMensajes}
+      />
     </Container>
-  )
+  );
 }
 
 export default DetalleEstudiante

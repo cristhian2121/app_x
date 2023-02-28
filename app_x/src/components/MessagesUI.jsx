@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Divider, IconButton, InputBase, Paper } from "@mui/material";
+import { Container, Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Message from './Message';
 
@@ -31,13 +30,14 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
 
   return (
     <>
-      <CssBaseline />
       <Paper
         elevation={3}
         square
         sx={{
           p: 2,
-          height: "70%",
+          // height: '100%',
+          height: 'calc(100% - 64px)',
+          minWidth: "390px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -45,28 +45,40 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
         }}
       >
 
-        <Paper
-        elevation={0}
-        square
-        id='msgs'
-        sx={{
-          pr: 2,
-          pl: 2,
-          height: "89%",
-          width: '100%',
-          display: "flex",
-          flexDirection: 'column-reverse',
-          justifyContent: "flex-start",
-          alignContent: 'center',
-          overflow: "scroll",
-        }}
-        >
-        {
-        mensajes.map( (msg) => (
-          <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
-        ))
-        }
-        </Paper>
+          <Paper
+          elevation={0}
+          square
+          id='msgs'
+          sx={{
+            pr: 2,
+            pl: 2,
+            height: "89%",
+            width: '100%',
+            display: "flex",
+            flexDirection: 'column-reverse',
+            justifyContent: "flex-start",
+            alignContent: 'center',
+            minWidth: "390px",
+            overflow: "scroll",
+          }}
+          >
+            { 
+            role == 'modista' ? 
+            mensajes.map( msg => (
+              <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
+            ))
+            :
+            mensajes.map( msg => {
+              if(msg.userType === 'modista') {
+                const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
+                return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
+              } else {
+                return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
+              }
+            })
+            }
+
+          </Paper>
 
         <Paper
           //component="form"
@@ -75,8 +87,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
             display: "flex",
             alignItems: "center",
             width: "100%",
-            //position: "sticky",
-            //bottom: "15px"
+            minWidth: "390px",
           }}
         >
           <InputBase

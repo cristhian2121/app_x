@@ -16,9 +16,9 @@ const Message = ({ msg, userName, dressMaker, role}) => {
 
   const aligmentMessages = () => {
     if (msg.userType === role) {
-      return  {display: "flex", width: "50%", minWidth: "400px", alignSelf: 'flex-end', flexDirection: 'row-reverse' }
+      return  {display: "flex", width: "50%", minWidth: "290px", alignSelf: 'flex-end', flexDirection: 'row-reverse' }
     }else { 
-      return {display: "flex", width: "50%", minWidth: "400px", alignSelf: 'flex-start', flexDirection: 'row' };
+      return {display: "flex", width: "50%", minWidth: "290px", alignSelf: 'flex-start', flexDirection: 'row' };
     }
   }
 
