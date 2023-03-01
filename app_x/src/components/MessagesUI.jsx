@@ -1,9 +1,27 @@
 import {useState, useEffect} from 'react';
-import { Container, Divider, IconButton, InputBase, Paper } from "@mui/material";
+import { Container, Divider, IconButton, InputBase, Paper, styled } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Message from './Message';
 
-
+const BootstrapPaper = styled(Paper)(
+  ({ theme }) => {
+  return {    
+    "&": {      
+      height: "89%",
+      width: '100%',
+      display: "flex",
+      flexDirection: 'column-reverse',
+      justifyContent: "flex-start",
+      alignContent: 'center',
+      minWidth: "390px",
+      overflow: "scroll",
+    },
+    "& .MuiBox-root": {
+      paddingLeft: 2,
+      paddingRight: 2,
+    }
+  }
+})
 
 export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker, role }) {
 
@@ -27,6 +45,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
       handleMessage();
     }
   }
+  console.log('dressMaker: ', dressMaker);
 
   return (
     <>
@@ -45,40 +64,24 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
         }}
       >
 
-          <Paper
+          <BootstrapPaper
           elevation={0}
           square
           id='msgs'
-          sx={{
-            pr: 2,
-            pl: 2,
-            height: "89%",
-            width: '100%',
-            display: "flex",
-            flexDirection: 'column-reverse',
-            justifyContent: "flex-start",
-            alignContent: 'center',
-            minWidth: "390px",
-            overflow: "scroll",
-          }}
           >
             { 
-            role == 'modista' ? 
+            role == 'estudiante' ? 
+            mensajes.map( msg => {
+              const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
+              return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
+            })
+            :
             mensajes.map( msg => (
               <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
             ))
-            :
-            mensajes.map( msg => {
-              if(msg.userType === 'modista') {
-                const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
-                return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
-              } else {
-                return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
-              }
-            })
             }
 
-          </Paper>
+          </BootstrapPaper>
 
         <Paper
           //component="form"
@@ -90,12 +93,17 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
             minWidth: "390px",
           }}
         >
+          {/* encapsular estado */}
+          {/* En la tabla agregar el input de biusqueda por nombre y correo */}
+          {/* tener en cuenta el performance, custom hook que cuente 500 ms hasta realizar la busqueda */}
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="Mensaje..."
             value={message}
             onChange={handleChange}
             onKeyDown={handleEnter}
+            // TODO: evitar problema rendimiento
+            // sendMessage={handleChange}
           />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
