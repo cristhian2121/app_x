@@ -80,6 +80,7 @@ const Profile = () => {
         res.json()
       );
     });
+    //try catch, error boundary. por dentro de los providers. 
     const responses = await Promise.all(dressMakerRequests);
     setModista(responses);
   }

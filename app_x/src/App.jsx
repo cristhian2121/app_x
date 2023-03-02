@@ -7,6 +7,7 @@ import { AuthProvider, AuthRoute } from "./components/auth";
 import StudentsList from "./pages/StudentsList";
 import DetalleEstudiante from "./components/DetalleEstudiante";
 import NotFound from "./pages/NotFound";
+import { ErrorBoundary } from "./hooks/ErrorBoundary";
 import Prueba from "./components/Prueba";
 import Prueba2 from "./components/Prueba2";
 
@@ -28,6 +29,7 @@ function App() {
     <>
       <TitleProvider>
         <AuthProvider>
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Login />} />
 
@@ -60,7 +62,7 @@ function App() {
             <Route path="/prueba2" element={<Prueba2/>} />
             <Route path="*" element={<NotFound/>} />
           </Routes>
-
+          </ErrorBoundary>
         </AuthProvider>
       </TitleProvider>
     </>
