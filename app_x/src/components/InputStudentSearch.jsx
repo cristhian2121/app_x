@@ -1,5 +1,5 @@
 import { IconButton, InputBase, Paper } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -10,12 +10,21 @@ const InputStudentSearch = ({handleSearch}) => {
 
     const handleChange = (e) => {
         setQuery(e.target.value);
-        handleSearch(e.target.value);
     }
 
     const handleClearClick = () => {
         setQuery('');
     };
+
+    useEffect(() =>{
+      const time = setTimeout(() => {
+        handleSearch(query)
+      }, 500)
+      // document.addEventListener("resize", () => {console.log("***5")})
+
+      // return () => { document.removeEventListener("resize", ()=>{console.log("***6")}) }
+      return () => clearTimeout(time)
+    }, [query])
 
   return (
     <Paper

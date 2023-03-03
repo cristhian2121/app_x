@@ -4,33 +4,34 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import InputStudentSearch from './InputStudentSearch';
+import PropTypes from 'prop-types'
 
-export default function DataTable({data}) {
+export default function DataTable({ data }) {
 
     const [students, setStudents] = React.useState([]);
+    const navigate = useNavigate();
+    const location = useLocation()
     //console.log(data)
     //arr.slice(0,5)
     let searchedStudents = [];
+
+    React.useEffect(() => {
+      setStudents(data)
+    }, [data])
     
     const handleSearch = (query) => {
-
-    if( !query.length >= 1){
-      setStudents(data);
-      //searchedStudents = data;
-    } else {
-        searchedStudents = data.filter(el => {
-        const studentText = el.firstName.toLowerCase();
-        const searchText = query.toLowerCase();
-        return studentText.includes(searchText);
-      });
-      setStudents(searchedStudents);
+      if( !query.length >= 1){
+        setStudents(data);
+        //searchedStudents = data;
+      } else {
+          searchedStudents = data.filter(el => {
+          const studentText = el.firstName.toLowerCase();
+          const searchText = query.toLowerCase();
+          return studentText.includes(searchText);
+        });
+        setStudents(searchedStudents);
+      }
     }
-    }
-
-
-    const navigate = useNavigate();
-    const location = useLocation()
-
 
     const handleOnClick = (user) => {
         navigate(`/student/${user.row._id}`); 
@@ -59,6 +60,7 @@ export default function DataTable({data}) {
       //const rows = data;
       //console.log(searchedStudents)
 
+
   return (
     <Box sx={{ width: '80%'}}>
       <InputStudentSearch handleSearch={handleSearch} />
@@ -66,11 +68,16 @@ export default function DataTable({data}) {
         getRowId={(row) => row._id}
         rows={students}
         columns={columns}
-        pageSize={10}
+        pageSize={100}
         autoHeight={true}
         autoPageSize
         disableSelectionOnClick
       />
     </Box>
   );
+}
+
+DataTable.propTypes = {
+  name: PropTypes.string,
+  data: PropTypes.array
 }

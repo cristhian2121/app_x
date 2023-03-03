@@ -12,6 +12,7 @@ specifiers:
   '@types/react-dom': ^18.0.9
   '@vitejs/plugin-react': ^3.0.0
   Button: link:@mui/material/Button
+  prop-types: ^15.8.1
   react: ^18.2.0
   react-dom: ^18.2.0
   react-hook-form: ^7.42.1
@@ -28,6 +29,7 @@ dependencies:
   '@mui/material': 5.11.2_lskpmcsdi7ipu6qpuapyu56ihm
   '@mui/x-data-grid': 5.17.17_4vavdnx26xk4g2nt6x4kfuu3vu
   Button: link:@mui/material/Button
+  prop-types: 15.8.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.42.1_react@18.2.0
