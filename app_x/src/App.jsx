@@ -7,7 +7,7 @@ import { AuthProvider, AuthRoute } from "./components/auth";
 import StudentsList from "./pages/StudentsList";
 import DetalleEstudiante from "./components/DetalleEstudiante";
 import NotFound from "./pages/NotFound";
-import { ErrorBoundary } from "./hooks/ErrorBoundary";
+import ErrorBoundary from "./hooks/ErrorBoundary";
 import Prueba from "./components/Prueba";
 import Prueba2 from "./components/Prueba2";
 

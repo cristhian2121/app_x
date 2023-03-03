@@ -66,23 +66,28 @@ const Profile = () => {
 
   const printDressmaker = async () => {
 
-    const dressMakersIDs = mensajes
+    try {
+      const dressMakersIDs = mensajes
       .filter((msj) => msj?.userType === "modista")
       .map((item) => item?.dressMakerId);
+      
+      const unique = dressMakersIDs.filter(
+        (item, i, ar) => ar.indexOf(item) === i
+        );
+        //const unique = [... new Set(dressMakersIDs)]
+        
+        let dressMakerRequests = unique.map((id) => {
+          return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) =>
+          res.json()
+          );
+        });
+        //try catch, error boundary. por dentro de los providers. 
+        const responses = await Promise.all(dressMakerRequests);
+        setModista(responses);
 
-    const unique = dressMakersIDs.filter(
-      (item, i, ar) => ar.indexOf(item) === i
-    );
-    //const unique = [... new Set(dressMakersIDs)]
-
-    let dressMakerRequests = unique.map((id) => {
-      return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) =>
-        res.json()
-      );
-    });
-    //try catch, error boundary. por dentro de los providers. 
-    const responses = await Promise.all(dressMakerRequests);
-    setModista(responses);
+      } catch (error) {
+        console.log(error);
+      }
   }
 
 

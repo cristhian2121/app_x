@@ -1,29 +1,30 @@
-import React from 'react';
+import { Container } from '@mui/material';
+import { Component } from 'react';
+import ErrorMessage from '../components/ErrorMessage';
 
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends Component {
     constructor(props) {
       super(props);
       this.state = { hasError: false };
     }
   
-    static getDerivedStateFromError(error) {
+    static getDerivedStateFromError() {
       // Update state so the next render will show the fallback UI.
       return { hasError: true };
     }
-  
-    componentDidCatch(error, errorInfo) {
-      // You can also log the error to an error reporting service
-      logErrorToMyService(error, errorInfo);
-    }
+
   
     render() {
       if (this.state.hasError) {
+        console.log('Este es el error ')
         // You can render any custom fallback UI
-        return <h1>Something went wrong.</h1>;
+        return (
+            <ErrorMessage/>
+        );
       }
   
       return this.props.children; 
     }
   }
 
-  export {ErrorBoundary};
+  export default ErrorBoundary;

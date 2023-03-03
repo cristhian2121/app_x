@@ -1,7 +1,6 @@
-import {useState, useEffect} from 'react';
-import { Container, Divider, IconButton, InputBase, Paper, styled } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
+import { Paper, styled } from "@mui/material";
 import Message from './Message';
+import MessageInput from './MessageInput';
 
 const BootstrapPaper = styled(Paper)(
   ({ theme }) => {
@@ -25,27 +24,8 @@ const BootstrapPaper = styled(Paper)(
 
 export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker, role }) {
 
-  const [message, setMessage] = useState('');
-
+  //throw Error('Opps!')
   const userName = user.firstName;
-
-  const handleChange = (e) => {
-    setMessage(e.target.value);
-  }
-  const handleMessage = () => {
-    enviarMensajes(message);
-    setMessage('');
-  }
-
-  const handleEnter = (e) => {
-    if(e.key == "Enter") {
-      const divMensajes = document.getElementById('msgs');
-      //divMensajes.scroll({ top: 0, behavior: 'smooth' });
-      divMensajes.scrollTop= 0;
-      handleMessage();
-    }
-  }
-  console.log('dressMaker: ', dressMaker);
 
   return (
     <>
@@ -82,40 +62,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
             }
 
           </BootstrapPaper>
-
-        <Paper
-          //component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            minWidth: "390px",
-          }}
-        >
-          {/* encapsular estado */}
-          {/* En la tabla agregar el input de biusqueda por nombre y correo */}
-          {/* tener en cuenta el performance, custom hook que cuente 500 ms hasta realizar la busqueda */}
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Mensaje..."
-            value={message}
-            onChange={handleChange}
-            onKeyDown={handleEnter}
-            // TODO: evitar problema rendimiento
-            // sendMessage={handleChange}
-          />
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-
-          <IconButton
-            color="primary"
-            sx={{ p: "10px" }}
-            aria-label="send"
-            onClick={handleMessage}
-          >
-            <SendIcon />
-          </IconButton>
-        </Paper>
+          <MessageInput enviarMensajes={enviarMensajes} />
       </Paper>
     </>
   );

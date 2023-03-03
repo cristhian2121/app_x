@@ -1,21 +1,39 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
+import InputStudentSearch from './InputStudentSearch';
 
 export default function DataTable({data}) {
+
+    const [students, setStudents] = React.useState([]);
+    //console.log(data)
+    //arr.slice(0,5)
+    let searchedStudents = [];
+    
+    const handleSearch = (query) => {
+
+    if( !query.length >= 1){
+      setStudents(data);
+      //searchedStudents = data;
+    } else {
+        searchedStudents = data.filter(el => {
+        const studentText = el.firstName.toLowerCase();
+        const searchText = query.toLowerCase();
+        return studentText.includes(searchText);
+      });
+      setStudents(searchedStudents);
+    }
+    }
+
 
     const navigate = useNavigate();
     const location = useLocation()
 
 
     const handleOnClick = (user) => {
-        //console.log(data.row);
-
-        //navigate(`/student/${data.row._id}`, { state: {firstName: data.row.firstName}}); 
         navigate(`/student/${user.row._id}`); 
-        
       }; 
 
     const columns = [
@@ -38,13 +56,15 @@ export default function DataTable({data}) {
         },
       ];
 
-      const rows = data;
+      //const rows = data;
+      //console.log(searchedStudents)
 
   return (
     <Box sx={{ width: '80%'}}>
+      <InputStudentSearch handleSearch={handleSearch} />
       <DataGrid
         getRowId={(row) => row._id}
-        rows={rows}
+        rows={students}
         columns={columns}
         pageSize={10}
         autoHeight={true}

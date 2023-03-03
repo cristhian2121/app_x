@@ -19,7 +19,7 @@ const StudentsList = () => {
     }
         useEffect(() => {
           getStudents();
-          console.log(auth)
+          //console.log(auth)
           setTitle(auth?.data.firstName);
         }, []);
 
