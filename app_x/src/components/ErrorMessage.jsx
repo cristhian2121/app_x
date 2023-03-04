@@ -1,8 +1,8 @@
-import { Container, IconButton } from '@mui/material';
+import { Container, IconButton, Typography } from '@mui/material';
 import ReplayRoundedIcon from '@mui/icons-material/ReplayRounded';
 import React from 'react'
 
-const ErrorMessage = () => {
+const ErrorMessage = ( {errorMessage} ) => {
   return (
     <Container
     sx={{
@@ -18,6 +18,7 @@ const ErrorMessage = () => {
       disableGutters
     >
         <h1>Something went wrong. </h1>
+        <Typography>{errorMessage}</Typography>
         <IconButton
         color="primary"
         onClick={ () => window.location.reload() }

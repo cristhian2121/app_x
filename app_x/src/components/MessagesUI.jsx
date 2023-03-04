@@ -24,7 +24,7 @@ const BootstrapPaper = styled(Paper)(
 
 export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker, role }) {
 
-  //throw Error('Opps!')
+  throw Error('Opps!')
   const userName = user.firstName;
 
   return (

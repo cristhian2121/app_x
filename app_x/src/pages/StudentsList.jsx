@@ -8,7 +8,6 @@ const StudentsList = () => {
     const [data, setData] = useState([]);
     const {auth} = useAuth();
     const {setTitle} = useContext(TitleContext);
-  
     const getStudents = () => {
       fetch("http://localhost:3100/students")
           .then((res) => res.json())
