@@ -6,7 +6,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 const InputStudentSearch = ({handleSearch}) => {
 
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(undefined);
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -18,10 +18,10 @@ const InputStudentSearch = ({handleSearch}) => {
 
     useEffect(() =>{
       const time = setTimeout(() => {
+      console.log(query)
         handleSearch(query)
       }, 500)
       // document.addEventListener("resize", () => {console.log("***5")})
-
       // return () => { document.removeEventListener("resize", ()=>{console.log("***6")}) }
       return () => clearTimeout(time)
     }, [query])

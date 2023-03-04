@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import InputStudentSearch from './InputStudentSearch';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'; 
 
 export default function DataTable({ data }) {
 
@@ -14,16 +14,24 @@ export default function DataTable({ data }) {
     //console.log(data)
     //arr.slice(0,5)
     let searchedStudents = [];
+    console.log('Render del componente')
+    console.log(data);
+
 
     React.useEffect(() => {
+      console.log('Effect cuando se modifica data');
       setStudents(data)
     }, [data])
     
     const handleSearch = (query) => {
       if( !query.length >= 1){
+          console.log('query es vacio');
+          console.log(data);
+          console.log(students);
+          //setStudents( (prevState) => prevState )
         setStudents(data);
-        //searchedStudents = data;
       } else {
+        console.log('query trae algo');
           searchedStudents = data.filter(el => {
           const studentText = el.firstName.toLowerCase();
           const searchText = query.toLowerCase();
@@ -58,7 +66,7 @@ export default function DataTable({ data }) {
       ];
 
       //const rows = data;
-      //console.log(searchedStudents)
+      //console.log(students)
 
 
   return (
