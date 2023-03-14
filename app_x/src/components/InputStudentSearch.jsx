@@ -1,12 +1,12 @@
 import { IconButton, InputBase, Paper } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 
 
 const InputStudentSearch = ({handleSearch}) => {
 
-    const [query, setQuery] = useState(undefined);
+    const [query, setQuery] = useState('');
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -18,7 +18,6 @@ const InputStudentSearch = ({handleSearch}) => {
 
     useEffect(() =>{
       const time = setTimeout(() => {
-      console.log(query)
         handleSearch(query)
       }, 500)
       // document.addEventListener("resize", () => {console.log("***5")})

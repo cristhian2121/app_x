@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import '../../../../app_x/src/pages/Login.css';
+import Link from 'next/link';
 //import { useAuth } from '../components/auth';
 //import { Controller } from "react-hook-form";
 //import { yupResolver } from '@hookform/resolvers/yup';
@@ -92,8 +93,7 @@ const Login = () => {
             >
               Log in
             </Button>
-            <a href="/">Forgot my password</a>
-
+            <a href="/">Forgot my passwordsss</a>
             <Button size="large" variant="outlined">
               Sign up
             </Button>

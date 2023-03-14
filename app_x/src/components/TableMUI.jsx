@@ -1,44 +1,35 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Box, Table, TableContainer } from '@mui/material';
 import InputStudentSearch from './InputStudentSearch';
 import PropTypes from 'prop-types'; 
 
 export default function DataTable({ data }) {
 
-    const [students, setStudents] = React.useState([]);
+    //const [students, setStudents] = React.useState([]);
+    const [search, setSearch] = React.useState('');
     const navigate = useNavigate();
-    const location = useLocation()
-    //console.log(data)
-    //arr.slice(0,5)
-    let searchedStudents = [];
-    console.log('Render del componente')
-    console.log(data);
-
-
-    React.useEffect(() => {
-      console.log('Effect cuando se modifica data');
-      setStudents(data)
-    }, [data])
+    
+    const studentsFilter = React.useMemo(() => {
+      if (search === '' ) return data;
+      const res = data.filter(el => {
+            const studentText = el.firstName.toLowerCase();
+            const searchText = search.toLowerCase();
+            return studentText.includes(searchText);
+      })
+      return res;
+    },[search, data]);
+    
+    // const studentsFilter = search === '' ? data : data.filter(el => {
+    //   const studentText = el.firstName.toLowerCase();
+    //   const searchText = search.toLowerCase();
+    //   return studentText.includes(searchText);
+    // })
     
     const handleSearch = (query) => {
-      if( !query.length >= 1){
-          console.log('query es vacio');
-          console.log(data);
-          console.log(students);
-          //setStudents( (prevState) => prevState )
-        setStudents(data);
-      } else {
-        console.log('query trae algo');
-          searchedStudents = data.filter(el => {
-          const studentText = el.firstName.toLowerCase();
-          const searchText = query.toLowerCase();
-          return studentText.includes(searchText);
-        });
-        setStudents(searchedStudents);
-      }
+      setSearch(query)
     }
 
     const handleOnClick = (user) => {
@@ -72,15 +63,15 @@ export default function DataTable({ data }) {
   return (
     <Box sx={{ width: '80%'}}>
       <InputStudentSearch handleSearch={handleSearch} />
-      <DataGrid
-        getRowId={(row) => row._id}
-        rows={students}
-        columns={columns}
-        pageSize={100}
-        autoHeight={true}
-        autoPageSize
-        disableSelectionOnClick
-      />
+        <DataGrid
+          sx={{ width: '100%', height: '540px'}}
+          getRowId={(row) => row._id}
+          rows={studentsFilter}
+          columns={columns}
+          pageSize={100}
+          autoPageSize
+          disableSelectionOnClick
+        />
     </Box>
   );
 }

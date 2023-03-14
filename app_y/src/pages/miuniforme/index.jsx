@@ -1,16 +1,16 @@
-import { TitleContext } from '@/contexts/TitleContext';
+//import { TitleContext } from '@/contexts/TitleContext';
 import { useAuth } from '@/hooks/auth';
 import { Container, Typography } from '@mui/material';
 import React, { useRef } from 'react'
 
 import DetallesInfo from '@/app/components/DetallesInfo';
-import MessagesUI from '@/app/components/MessagesUI';
+//import MessagesUI from '@/app/components/MessagesUI';
 
 
 const Profile = () => {
 
   const { auth } = useAuth();
-  const {setTitle} = React.useContext(TitleContext);
+  //const {setTitle} = React.useContext(TitleContext);
   const [mensajes, setMensajes] = React.useState([]);
   const [modista, setModista] = React.useState({});
   const modistasRef = useRef([]);
@@ -22,11 +22,11 @@ const Profile = () => {
   const url = `http://localhost:3100/messages/${infoUser._id}`;
   
   //Para cambiar el nombre en el header
-  React.useEffect(() => {
-    if(auth?.data){
-      setTitle(auth.data.firstName);
-    }
-  }, [auth]);
+  // React.useEffect(() => {
+  //   if(auth?.data){
+  //     setTitle(auth.data.firstName);
+  //   }
+  // }, [auth]);
   
   const getMessages = () => {
       fetch(url)
@@ -97,7 +97,7 @@ const Profile = () => {
 
       <DetallesInfo user={infoUser} />
 
-      <MessagesUI mensajes={mensajes} user={infoUser} dressMaker={modista} role='estudiante' enviarMensajes={enviarMensajes}/>
+      {/* <MessagesUI mensajes={mensajes} user={infoUser} dressMaker={modista} role='estudiante' enviarMensajes={enviarMensajes}/> */}
       
     </Container>
   );

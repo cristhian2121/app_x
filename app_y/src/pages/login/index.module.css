@@ -12,9 +12,10 @@
 
 body {
     margin: 0;
-    /* font-family: 'Quicksand', sans-serif; */
-    background-image: url(../assets/bg.svg);
-    /* background-size: cover;
+    font-family: 'Quicksand', sans-serif;
+    background-color: #000000;
+    /* background-image: url(../assets/bg.svg);
+    background-size: cover;
     background-position: center;
     background-repeat: repeat; */
 
