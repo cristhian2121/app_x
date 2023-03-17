@@ -17,7 +17,7 @@ const ErrorMessage = ( {errorMessage} ) => {
       }}
       disableGutters
     >
-        <h1>Something went wrong. </h1>
+        <h1>Parece que algo salio mal</h1>
         <Typography>{errorMessage}</Typography>
         <IconButton
         color="primary"
