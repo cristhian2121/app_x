@@ -1,12 +1,17 @@
 import { Container, Typography } from '@mui/material';
 import React, { useRef } from 'react'
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useAuth } from '../components/auth'
 import DetallesInfo from '../components/DetallesInfo';
+import ErrorMessage from '../components/ErrorMessage';
+import Loading from '../components/Loading';
 import MessagesUI from '../components/MessagesUI';
 import { TitleContext } from '../context/TitleContext';
+import { getStudentMessages } from '../uniformsApi/uniformsAPI';
 
 const Profile = () => {
 
+  
   const { auth } = useAuth();
   const {setTitle} = React.useContext(TitleContext);
   const [mensajes, setMensajes] = React.useState([]);
@@ -14,8 +19,23 @@ const Profile = () => {
   
   //Objeto con los datos del usuario
   const infoUser = auth?.data;
-  const url = `http://localhost:3100/messages/${infoUser._id}`;
+  //const url = `http://localhost:3100/messages/${infoUser._id}`;
   
+  const {isLoading, data: studentMessages, isError, error} = useQuery({
+    queryKey: ['StudentMessages', infoUser._id],
+    queryFn: () => getStudentMessages(infoUser._id),
+    select: (studentMessages) => studentMessages.reverse(),
+  });
+
+  const queryClient = useQueryClient();
+  
+  const sendMessage = useMutation({
+    mutationFn: (message) => sendMessages(infoUser._id, _, 'estudiante', message),
+    onSuccess: () => {
+      queryClient.invalidateQueries('StudentMessages');
+    }
+  })
+
   //Para cambiar el nombre en el header
   React.useEffect(() => {
     if(auth?.data){
@@ -23,42 +43,43 @@ const Profile = () => {
     }
   }, [auth]);
   
-  const getMessages = () => {
-      fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setMensajes(data.reverse())
-      });
-  }
+  // const getMessages = () => {
+  //     fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setMensajes(data.reverse())
+  //     });
+  // }
 
-  const enviarMensajes = (message) => {
-    const url = 'http://localhost:3100/messages';
-    const options = {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            studentId: infoUser._id,
-            //dressMakerId: '63b8eeb91b7fc428d0dc1354',
-            userType: 'estudiante',
-            dateCreated: Date.now(),
-            message: message,
-        }),
-    }
 
-    fetch(url, options)
-      .then((res) => res.json())
-      .then((data) => {  
-        getMessages();
-        //console.log(data);
-    });
-  }
+  // const enviarMensajes = (message) => {
+  //   const url = 'http://localhost:3100/messages';
+  //   const options = {
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       },
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //           studentId: infoUser._id,
+  //           //dressMakerId: '63b8eeb91b7fc428d0dc1354',
+  //           userType: 'estudiante',
+  //           dateCreated: Date.now(),
+  //           message: message,
+  //       }),
+  //   }
 
-  React.useEffect(() => {
-    getMessages();
-    printDressmaker();
-  }, [])
+  //   fetch(url, options)
+  //     .then((res) => res.json())
+  //     .then((data) => {  
+  //       getMessages();
+  //       //console.log(data);
+  //   });
+  // }
+
+  // React.useEffect(() => {
+  //   getMessages();
+  //   printDressmaker();
+  // }, [])
 
   React.useEffect(() => {
     printDressmaker();
@@ -67,14 +88,16 @@ const Profile = () => {
   const printDressmaker = async () => {
 
     try {
-      const dressMakersIDs = mensajes
+      const dressMakersIDs = studentMessages
       .filter((msj) => msj?.userType === "modista")
       .map((item) => item?.dressMakerId);
+
       
       const unique = dressMakersIDs.filter(
         (item, i, ar) => ar.indexOf(item) === i
         );
         //const unique = [... new Set(dressMakersIDs)]
+        console.warn('AAAAAAAAAA',unique);
         
         let dressMakerRequests = unique.map((id) => {
           return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) =>
@@ -91,6 +114,8 @@ const Profile = () => {
   }
 
 
+  if (isLoading) return <Loading/>
+    else if (isError) return <ErrorMessage errorMessage={error.message}/>
 
   return (
     <Container
@@ -109,7 +134,7 @@ const Profile = () => {
       <DetallesInfo user={infoUser} />
 
       <MessagesUI
-        mensajes={mensajes}
+        mensajes={studentMessages}
         user={infoUser}
         dressMaker={modista}
         role="estudiante"

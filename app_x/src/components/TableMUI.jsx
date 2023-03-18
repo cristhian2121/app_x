@@ -56,10 +56,6 @@ export default function DataTable({ data }) {
         },
       ];
 
-      //const rows = data;
-      //console.log(students)
-
-
   return (
     <Box sx={{ width: '80%'}}>
       <InputStudentSearch handleSearch={handleSearch} />
@@ -77,6 +73,5 @@ export default function DataTable({ data }) {
 }
 
 DataTable.propTypes = {
-  name: PropTypes.string,
   data: PropTypes.array
 }

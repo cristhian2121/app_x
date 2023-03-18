@@ -12,7 +12,7 @@ const MessageInput = ({ enviarMensajes }) => {
     }
 
     const handleMessage = () => {
-        enviarMensajes(message);
+        enviarMensajes.mutate(message);
         setMessage('');
     }
 

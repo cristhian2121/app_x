@@ -4,7 +4,7 @@ import { useAuth } from '../components/auth';
 import DataTable from '../components/TableMUI';
 import { TitleContext } from '../context/TitleContext';
 import {useQuery} from 'react-query';
-import { getStudents } from '../uniformsApi/uniformsAPI'
+import { getStudents } from '../uniformsApi/uniformsAPI';
 import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 
@@ -12,13 +12,14 @@ const StudentsList = () => {
 
   const {isLoading, data: studentsList, isError, error} = useQuery({
     queryKey: ['students'],
-    queryFn: getStudents
+    queryFn: getStudents,
   })
 
   const [data, setData] = useState([]);
   const { auth } = useAuth();
   const { setTitle } = useContext(TitleContext);
 
+  //antes de react-query
   // const getStudents = () => {
   //   fetch("http://localhost:3100/students")
   //     .then((res) => res.json())
@@ -29,8 +30,7 @@ const StudentsList = () => {
   // };
 
   useEffect(() => {
-    //getStudents();
-    //console.log(auth)
+    //getStudents(); antes de react-query
     setTitle(auth?.data.firstName);
   }, []);
 

@@ -25,7 +25,7 @@ const BootstrapPaper = styled(Paper)(
 export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker, role }) {
 
   //throw Error('Opps!')
-  const userName = user.firstName;
+  const userName = user?.firstName;
 
   return (
     <>
@@ -50,15 +50,19 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
           id='msgs'
           >
             { 
-            role == 'estudiante' ? 
-            mensajes.map( msg => {
-              const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
-              return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
-            })
-            :
             mensajes.map( msg => (
               <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
             ))
+
+            // role == 'estudiante' ? 
+            // mensajes.map( msg => {
+            //   const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
+            //   return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
+            // })
+            // :
+            // mensajes.map( msg => (
+            //   <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressMaker} role={role} />
+            // ))
             }
 
           </BootstrapPaper>

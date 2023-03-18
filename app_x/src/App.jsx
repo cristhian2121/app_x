@@ -34,7 +34,6 @@ function App() {
             <Route path="/" element={<Login />} />
 
             <Route path="/" >
-              
               <Route path="/miuniforme" element={
                 <WrapperWithPermission>
                   <Profile />
