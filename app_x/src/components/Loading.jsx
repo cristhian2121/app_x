@@ -8,7 +8,6 @@ const Loading = () => {
           height: "100%",
           minHeight: "100vh",
           paddingTop: 10,
-          height: "100%",
           display: "grid",
           placeItems: "center",
         }}

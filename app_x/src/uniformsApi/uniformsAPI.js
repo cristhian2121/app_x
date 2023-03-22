@@ -6,6 +6,10 @@ export const getStudentInfo = (id) => {
   return fetch(`http://localhost:3100/students/${id}`).then((res) => res.json());
   
 }
+export const getDressMakerInfo = (id) => {
+  return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) => res.json());
+  
+}
 
 export const getStudentMessages = (id) => {
   return fetch(`http://localhost:3100/messages/${id}`).then((res) => res.json());

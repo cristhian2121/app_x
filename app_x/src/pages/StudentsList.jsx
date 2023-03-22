@@ -15,7 +15,7 @@ const StudentsList = () => {
     queryFn: getStudents,
   })
 
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
   const { auth } = useAuth();
   const { setTitle } = useContext(TitleContext);
 

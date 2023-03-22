@@ -55,7 +55,7 @@ export default function DataTable({ data }) {
       
         },
       ];
-
+  
   return (
     <Box sx={{ width: '80%'}}>
       <InputStudentSearch handleSearch={handleSearch} />
