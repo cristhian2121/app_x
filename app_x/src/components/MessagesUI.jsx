@@ -26,7 +26,6 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
 
   //throw Error('Opps!')
   const userName = user?.firstName;
-  console.log(dressMaker)
 
   return (
     <>
@@ -53,9 +52,7 @@ export default function MessagesUI({ enviarMensajes, user, mensajes, dressMaker,
             { 
             role == 'estudiante' ? 
             mensajes.map( msg => {
-              console.log(msg)
-              console.log(dressMaker)
-              const dressmakerInfo = (dressMaker && []).filter( dm => dm._id == msg.dressMakerId)
+              const dressmakerInfo = dressMaker.filter( dm => dm._id == msg.dressMakerId)
               return <Message msg={msg} userName={userName} key={msg._id} dressMaker={dressmakerInfo[0]} role={role} />
             })
             :

@@ -15,63 +15,42 @@ import { getStudentMessages, sendMessages, getDressMakerInfo } from '../uniforms
 //fetchers
 
 const Profile = () => {
-
   
   const { auth } = useAuth();
   const {setTitle} = useContext(TitleContext);
-  const [modista, setModista] = useState({});
-  //const [mensajes, setMensajes] = useState([]);
-  //const [modistasID, setModistasID] = useState([]);
   
   //Objeto con los datos del usuario
   const infoUser = auth?.data;
 
-  //const url = `http://localhost:3100/messages/${infoUser._id}`;
-  
   const {isLoading, data: studentMessages, isError, error} = useQuery({
     queryKey: ['StudentMessages', infoUser._id],
     queryFn: () => getStudentMessages(infoUser._id),
     select: (studentMessages) => studentMessages.slice().reverse(),
-    onSuccess: (studentMessages) => printDressmaker(studentMessages),
   });
 
-    // const dressMakersIDs = studentMessages
-    // ?.filter((msj) => msj.userType === "modista")
-    // .map((item) => item.dressMakerId);
+    const dressMakersIDs = studentMessages
+    ?.filter((msj) => msj.userType === "modista")
+    .map((item) => item.dressMakerId);
 
-    // const unique = dressMakersIDs?.filter(
-    // (item, i, ar) => ar.indexOf(item) === i
-    // );
-  //   const queries = unique?.map( (id) => (
-  //     {
-  //       queryKey: [`DressMakerInfo${id}`, id],
-  //       queryFn: () => getDressMakerInfo(id),
-  //       enabled: !!studentMessages,
-  //     }
-  //   ))
+    const unique = dressMakersIDs?.filter(
+      (item, i, ar) => ar.indexOf(item) === i
+      );
 
-  // const modistasInfo = useQueries(queries)
+    const queries = unique?.map( id => ({
+            queryKey: ["DressMakerInfo", id],
+            queryFn: () => getDressMakerInfo(id),
+          })) || [];
+        
+    const modistasInfo = useQueries(queries);
+    const modistas = modistasInfo.map(query => query.data);
 
-  const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
   const sendMessage = useMutation({
     mutationFn: (message) => sendMessages(infoUser._id, '', 'estudiante', message),
     onSuccess: () => {
       queryClient.invalidateQueries('StudentMessages');
     }
   })
-
-  // const uniqueValues =  (messages) => {
-  //   const dressMakersIDs = messages
-  //   .filter((msj) => msj.userType === "modista")
-  //   .map((item) => item.dressMakerId);
-
-  //   const unique = dressMakersIDs.filter(
-  //   (item, i, ar) => ar.indexOf(item) === i
-  //   );
-  //   console.log(unique)
-  //   setModistasID(unique);
-  // } 
-  
 
   //Para cambiar el nombre en el header
   useEffect(() => {
@@ -87,68 +66,13 @@ const Profile = () => {
   //       setMensajes(data.reverse())
   //     });
   // }
+  //
 
 
-  // const enviarMensajes = (message) => {
-  //   const url = 'http://localhost:3100/messages';
-  //   const options = {
-  //       headers: {
-  //           'Content-Type': 'application/json'
-  //       },
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //           studentId: infoUser._id,
-  //           //dressMakerId: '63b8eeb91b7fc428d0dc1354',
-  //           userType: 'estudiante',
-  //           dateCreated: Date.now(),
-  //           message: message,
-  //       }),
-  //   }
-
-  //   fetch(url, options)
-  //     .then((res) => res.json())
-  //     .then((data) => {  
-  //       getMessages();
-  //       //console.log(data);
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   //getMessages();
-  //   printDressmaker();
-  // }, [studentMessages])
-
-  // useEffect(() => {
-  //      printDressmaker();
-  // }, [])
-
-  const printDressmaker = async (studentMes) => {
-
-    try {
-        const dressMakersIDs = studentMes
-          .filter((msj) => msj?.userType === "modista")
-          .map((item) => item?.dressMakerId);
-        const unique = dressMakersIDs
-          ?.filter( (item, i, ar) => ar.indexOf(item) === i
-          );
-      //const unique = [... new Set(dressMakersIDs)]
-
-      let dressMakerRequests = await unique.map( (id) => {
-        return fetch(`http://localhost:3100/dressmakers/${id}`).then((res) =>
-        res.json()
-        );
-      });
-
-      //try catch, error boundary. por dentro de los providers.
-      const responses = await Promise.all(dressMakerRequests);
-      setModista(responses);
-    } catch (error) {
-        console.warn(error);
-      }
-  }
-
-    if(isLoading) return null
+    if(isLoading) return <Loading />
     else if (isError) return <ErrorMessage errorMessage={error.message}/>
+
+    const modistasListos = modistasInfo.some(query => query.isLoading);
 
   return (
     <Container
@@ -166,13 +90,16 @@ const Profile = () => {
 
       <DetallesInfo user={infoUser} />
 
-      <MessagesUI
-        mensajes={studentMessages}
-        user={infoUser}
-        dressMaker={modista}
-        role="estudiante"
-        enviarMensajes={sendMessage}
-      />
+      {!modistasListos &&
+        <MessagesUI
+          mensajes={studentMessages}
+          user={infoUser}
+          dressMaker={modistas}
+          role="estudiante"
+          enviarMensajes={sendMessage}
+        />
+      }
+
     </Container>
   );
 }
